@@ -10,3 +10,9 @@ function init() {
     console.log('My character is', world.character);
     console.log('My enemie is', world.enemies);
 }
+
+window.addEventListener('keypress', (event) => {
+    console.log(event);
+    let json = KeyboardEvent;
+    console.log(json[key]);
+})
