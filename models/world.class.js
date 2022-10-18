@@ -19,6 +19,7 @@ class World {
         this.character.world = this;
     }
 
+    // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
