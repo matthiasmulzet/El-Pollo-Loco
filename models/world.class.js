@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     level = level1;
+    statusbar = new Statusbar();
 
     canvas;
     ctx;
@@ -13,10 +14,22 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    this.statusbar.reducePercentage();
+                }
+            });
+        }, 100);
     }
 
     // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
@@ -26,6 +39,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addToMap(this.statusbar);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
