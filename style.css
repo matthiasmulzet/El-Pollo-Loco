@@ -1,9 +1,90 @@
 body {
+    font-family: 'Luckiest Guy', Arial, Helvetica, sans-serif;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    background-image: url('img/9_intro_outro_screens/start/startscreen_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.d-none {
+    display: none;
 }
 
 canvas {
-    background-color: black;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 50%);
+}
+
+.startscreen {
+    position: relative;
+    width: 720px;
+    height: 480px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 50%);
+}
+
+.startscreen-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+.bg-styling {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFC800;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 20%);
+    transition: all 200ms ease-in-out;
+}
+
+.start-game {
+    left: 40%;
+    top: 30px;
+    font-size: 22px;
+    padding: 10px;
+    border-radius: 22px;
+}
+
+.settings {
+    left: 40px;
+}
+
+.full-screen {
+    left: 45%;
+}
+
+.controls {
+    right: 40px;
+}
+
+.settings, .full-screen, .controls {
+    bottom: 15px;
+    border-radius: 30px;
+    padding: 2px 25px;
+}
+
+.start-game:hover, .settings:hover, .full-screen:hover, .controls:hover {
+    scale: 1.1;
+    background-color: rgb(243, 224, 16);
+}
+
+.settings img, .full-screen img, .controls img {
+    width: 36px;
+    height: 36px;
+}
+
+.img-from {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
 }

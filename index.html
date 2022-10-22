@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/background-object.class.js"></script>
@@ -23,17 +24,39 @@
     <script src="models/endboss.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/startscreen.js"></script>
 
     <title>El Pollo Loco</title>
 </head>
 
-<body onload="init()">
+<body>
 
-    <h1>El pollo loco</h1>
+    <div id="startscreen" class="startscreen">
+        <img class="startscreen-img" src="img/9_intro_outro_screens/start/startscreen_1.png">
+        <div onclick="init()" class="start-game bg-styling">Start Game</div>
 
-    <canvas id="canvas" width="720px" height="480px">
+        <div class="settings bg-styling">
+            <img src="img/9_intro_outro_screens/start/gears-solid.svg" alt="settings">
+        </div>
+
+        <div class="full-screen bg-styling">
+            <img src="img/9_intro_outro_screens/start/expand-solid.svg" alt="full-screen">
+        </div>
+
+        <div onclick="showControls()" class="controls bg-styling">
+            <img src="img/9_intro_outro_screens/start/gamepad-solid.svg" alt="controls">
+        </div>
+    </div>
+
+
+    <canvas id="canvas" class="d-none" id="canvas" width="720px" height="480px">
 
     </canvas>
+
+    <a class="img-from"
+        href="https://www.freepik.com/free-vector/mexican-cactus-with-mustaches-sombrero-poncho-desert-landscape-viva-mexico-cinco-de-mayo-party-traditional-latin-holiday-fiesta-celebration-symbol-cartoon-vector-illustration_21219711.htm#page=2&query=desert%20cartoon&position=0&from_view=search&track=sph">Image
+        by upklyak on Freepik</a>
+
 
 </body>
 
