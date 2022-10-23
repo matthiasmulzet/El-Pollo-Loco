@@ -32,7 +32,9 @@
 <body>
 
     <div id="startscreen" class="startscreen">
-        <img class="startscreen-img" src="img/9_intro_outro_screens/start/startscreen_1.png">
+        <div class="overlay">
+            <img id="startscreen-img" class="startscreen-img" src="img/9_intro_outro_screens/start/startscreen_1.png">
+        </div>
         <div onclick="init()" class="start-game bg-styling">Start Game</div>
 
         <div class="settings bg-styling">
@@ -45,6 +47,33 @@
 
         <div onclick="showControls()" class="controls bg-styling">
             <img src="img/9_intro_outro_screens/start/gamepad-solid.svg" alt="controls">
+        </div>
+
+        <div id="controls" class="controls-div d-none">
+            <table>
+                <tr>
+                    <td>Move Right</td>
+                    <td class="keys"> <img class="controls-img"
+                            src="img/9_intro_outro_screens/start/right-long-solid.svg" alt="arrow-right"> </td>
+                </tr>
+                <tr>
+                    <td>Move Left</td>
+                    <td class="keys"> <img class="controls-img"
+                            src="img/9_intro_outro_screens/start/left-long-solid.svg" alt="arrow-left"> </td>
+                </tr>
+                <tr>
+                    <td>Jump</td>
+                    <td class="keys"> <img class="controls-img" src="img/9_intro_outro_screens/start/space.png"
+                            alt="space"> </td>
+                </tr>
+                <tr>
+                    <td>Throw Bottle</td>
+                    <td class="keys controls-d"> D </td>
+                </tr>
+            </table>
+            <div onclick="closeControls()" class="close-div">
+                <img src="img/9_intro_outro_screens/start/close.svg" alt="close">
+            </div>
         </div>
     </div>
 
