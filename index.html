@@ -29,19 +29,20 @@
     <title>El Pollo Loco</title>
 </head>
 
-<body>
+<body onload="init()">
 
-    <div id="startscreen" class="startscreen">
+    <div id="startscreen" class="startscreen d-none">
         <div class="overlay">
-            <img id="startscreen-img" class="startscreen-img" src="img/9_intro_outro_screens/start/startscreen_1.png">
+            <img id="startscreen-img" class="startscreen-img no-grayscale"
+                src="img/9_intro_outro_screens/start/startscreen_1.png">
         </div>
-        <div onclick="init()" class="start-game bg-styling">Start Game</div>
+        <div onclick="init()" class="start-game bg-styling p-absolute-middle">Start Game</div>
 
         <div class="settings bg-styling">
             <img src="img/9_intro_outro_screens/start/gears-solid.svg" alt="settings">
         </div>
 
-        <div class="full-screen bg-styling">
+        <div id="fullscreen" onclick="showFullScreen()" class="full-screen bg-styling p-absolute-middle">
             <img src="img/9_intro_outro_screens/start/expand-solid.svg" alt="full-screen">
         </div>
 
@@ -49,7 +50,7 @@
             <img src="img/9_intro_outro_screens/start/gamepad-solid.svg" alt="controls">
         </div>
 
-        <div id="controls" class="controls-div d-none">
+        <div id="controls" class="controls-div hidden">
             <table>
                 <tr>
                     <td>Move Right</td>
@@ -78,7 +79,7 @@
     </div>
 
 
-    <canvas id="canvas" class="d-none" id="canvas" width="720px" height="480px">
+    <canvas class="d-none" id="canvas" width="720px" height="480px">
 
     </canvas>
 

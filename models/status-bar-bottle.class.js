@@ -11,11 +11,11 @@ class StatusbarBottle extends DrawableObject {
 
     constructor() {
         super();
-        this.loadImage('img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/100.png');
+        this.loadImage('img/6_salsa_bottle/salsa_bottle.png');
         // this.loadImages(this.IMAGES);
-        this.x = 20;
-        this.y = 20;
-        this.height = 60;
-        this.width = 200;
+        this.x = 130;
+        this.y = 60;
+        this.height = 55;
+        this.width = 55;
     }
 }

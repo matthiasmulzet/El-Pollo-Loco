@@ -1,8 +1,8 @@
 class World {
     character = new Character();
     level = level1;
-    statusbarBottle = new StatusbarBottle();
     statusbarHealth = new StatusbarHealth();
+    statusbarBottle = new StatusbarBottle();
     statusbarCoin = new StatusbarCoin();
 
     throwableObjects = [];
@@ -11,6 +11,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    score = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -57,17 +58,18 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
         // ------- Space for fixed objects ------- 
-        this.addToMap(this.statusbarBottle);
         this.addToMap(this.statusbarHealth);
+        this.addToMap(this.statusbarBottle);
         this.addToMap(this.statusbarCoin);
+        this.drawScore();
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -109,5 +111,12 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    drawScore() {
+        this.ctx.font = "34px Arial";
+        this.ctx.fillStyle = "black";
+        this.ctx.fillText(this.score, 80, 103);
+        this.ctx.fillText(this.score, 173, 103);
     }
 }

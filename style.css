@@ -13,6 +13,33 @@ body {
     display: none !important;
 }
 
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.grayscale {
+    filter: grayscale(50%);
+    transition: grayscale 0.3s linear;
+}
+
+.no-grayscale {
+    filter: grayscale(0%);
+    transition: grayscale 0.3s linear;
+}
+
+.p-absolute-middle {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 canvas {
     border-radius: 15px;
     box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 50%);
@@ -55,7 +82,6 @@ canvas {
 }
 
 .start-game {
-    left: 40%;
     top: 30px;
     font-size: 22px;
     padding: 10px;
@@ -64,10 +90,6 @@ canvas {
 
 .settings {
     left: 40px;
-}
-
-.full-screen {
-    left: 45%;
 }
 
 .controls {
@@ -137,8 +159,6 @@ canvas {
     cursor: pointer;
     transition: all 200ms ease-in-out;
 }
-
-
 
 .close-div img {
     height: 22px;
