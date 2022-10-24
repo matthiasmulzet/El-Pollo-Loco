@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    durationPlaySound = 0;
 
 
     applyGravity() {
@@ -59,9 +60,9 @@ class MovableObject extends DrawableObject {
         return this.energy == 0;
     }
 
-    isHurt() {
+    isHurt(durationPlaySound) {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
-        return timepassed < 1;
+        return timepassed < durationPlaySound;
     }
 }

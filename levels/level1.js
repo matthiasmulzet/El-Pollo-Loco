@@ -1,3 +1,11 @@
+
+let allCoins = [];
+
+for (let i = 0; i < 30; i++) {
+    let coin = new Coin();
+    allCoins.push(coin);
+}
+
 const level1 = new Level(
     [
         new Chicken(),
@@ -28,5 +36,12 @@ const level1 = new Level(
         new BackgroundObject('img/5_background/second_half_background.png', 5039),
         new BackgroundObject('img/5_background/first_half_background.png', 5759),
         new BackgroundObject('img/5_background/second_half_background.png', 6479)
+    ],
+    [
+        allCoins[0], allCoins[1], allCoins[2], allCoins[3], allCoins[4], allCoins[5], allCoins[6], allCoins[7],
+        allCoins[8], allCoins[9], allCoins[10], allCoins[11], allCoins[12], allCoins[13], allCoins[14],
+        allCoins[15], allCoins[16], allCoins[17], allCoins[18], allCoins[19], allCoins[20], allCoins[21],
+        allCoins[22], allCoins[23], allCoins[24], allCoins[25], allCoins[26], allCoins[27], allCoins[28],
+        allCoins[29]
     ]
 );
