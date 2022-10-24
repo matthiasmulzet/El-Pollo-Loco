@@ -11,7 +11,8 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    score = 0;
+    scoreCoins = 0;
+    scoreBottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -31,6 +32,7 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkCollisionsCoins();
+            this.checkCollisionsBottles();
         }, 100);
     }
 
@@ -53,11 +55,24 @@ class World {
     checkCollisionsCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isCollidingCoin(coin)) {
-                this.score += 1;
+                this.character.collisionCoin.play();
+                let index = this.level.coins.indexOf(coin);
+                this.level.coins.splice(index, 1);
+                this.scoreCoins += 1;
             }
         })
     }
 
+    checkCollisionsBottles() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isCollidingBottle(bottle)) {
+                this.character.collisionBottle.play();
+                let index = this.level.bottles.indexOf(bottle);
+                this.level.bottles.splice(index, 1);
+                this.scoreBottles += 1;
+            }
+        })
+    }
 
     // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
     draw() {
@@ -79,6 +94,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
@@ -125,7 +141,7 @@ class World {
     drawScore() {
         this.ctx.font = "34px Arial";
         this.ctx.fillStyle = "black";
-        this.ctx.fillText(this.score, 80, 103);
-        this.ctx.fillText(this.score, 173, 103);
+        this.ctx.fillText(this.scoreCoins, 80, 103);
+        this.ctx.fillText(this.scoreBottles, 173, 103);
     }
 }
