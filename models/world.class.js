@@ -30,7 +30,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-
+            this.checkCollisionsCoins();
         }, 100);
     }
 
@@ -48,6 +48,14 @@ class World {
                 this.statusbarHealth.setPercentage(this.character.energy);
             }
         });
+    }
+
+    checkCollisionsCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isCollidingCoin(coin)) {
+                this.score += 1;
+            }
+        })
     }
 
 

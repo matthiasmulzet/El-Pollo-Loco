@@ -35,7 +35,10 @@ const level1 = new Level(
         new BackgroundObject('img/5_background/first_half_background.png', 4319),
         new BackgroundObject('img/5_background/second_half_background.png', 5039),
         new BackgroundObject('img/5_background/first_half_background.png', 5759),
-        new BackgroundObject('img/5_background/second_half_background.png', 6479)
+        new BackgroundObject('img/5_background/second_half_background.png', 6479),
+        new BackgroundObject('img/5_background/first_half_background.png', 7199),
+        new BackgroundObject('img/5_background/second_half_background.png', 7919),
+        new BackgroundObject('img/5_background/first_half_background.png', 8639)
     ],
     [
         allCoins[0], allCoins[1], allCoins[2], allCoins[3], allCoins[4], allCoins[5], allCoins[6], allCoins[7],

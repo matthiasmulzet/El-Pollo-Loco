@@ -47,6 +47,15 @@ class MovableObject extends DrawableObject {
             this.y < mo.y + mo.height
     }
 
+
+
+    isCollidingCoin(coin) {
+        return (this.x + 25) + (this.width - 40) > (coin.x + 45) &&
+            (this.y + 115) + (this.height - 125) > (coin.y + 45) &&
+            (this.x + 25) < (coin.x + 45) &&
+            (this.y + 115) < (coin.y + 45) + (coin.height - 90)
+    }
+
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
