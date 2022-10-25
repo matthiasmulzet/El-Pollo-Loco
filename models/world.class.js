@@ -6,6 +6,7 @@ class World {
     statusbarCoin = new StatusbarCoin();
 
     throwableObjects = [];
+    deadSmallChicken = new DeadSmallChicken('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
 
     canvas;
     ctx;
@@ -48,13 +49,13 @@ class World {
             if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy);
                 if (this.character.y >= 105 && this.character.speedY <= -30) {
-                    this.level.enemies[index].img.src = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
-                    console.log('character y', this.character.y);
-                    console.log('speed y', this.character.speedY);
                     this.character.speedY = 0;
-                    // setTimeout(() => {
+                    this.deadSmallChicken.x = this.level.enemies[index].x;
                     this.level.enemies.splice(index, 1);
-                    // }, 1000);
+                    setTimeout(() => {
+                        console.log('small chicken', this.deadSmallChicken.x);
+                        this.addToMap(this.deadSmallChicken);
+                    }, 2000);
                 }
 
                 // else if (enemy.height == 70 && this.character.y == 77.5) {
@@ -98,23 +99,6 @@ class World {
         })
     }
 
-    enemyDead(enemy) {
-        let index = this.level.enemies.indexOf(enemy);
-        return this.level.enemies[index].img.src == 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
-    }
-
-    showEnemy() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.enemyDead(enemy)) {
-                this.level.enemies[enemy].loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
-            }
-            else {
-                this.addObjectsToMap(this.level.enemies);
-            }
-        });
-    }
-
-
 
     // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
     draw() {
@@ -134,8 +118,12 @@ class World {
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);
+        // setTimeout(() => {
+        this.addToMap(this.deadSmallChicken);
+        // }, 2000);
 
-        this.showEnemy();
+
+        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
@@ -159,8 +147,12 @@ class World {
         if (mo.otherDirection) {//img turns to other side
             this.flipImage(mo);
         }
-
-        mo.draw(this.ctx);
+        try {
+            mo.draw(this.ctx);
+        } catch (e) {
+            console.log('Error loading image', e);
+            console.log('Could not load image', mo);
+        }
         mo.drawFrame(this.ctx);
 
 
