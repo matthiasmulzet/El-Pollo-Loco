@@ -54,6 +54,7 @@ class MovableObject extends DrawableObject {
             (this.y + 115) < (coin.y + 45) + (coin.height - 90)
     }
 
+
     isCollidingBottle(bottle) {
         return (this.x + 25) + (this.width - 40) > (bottle.x + 30) &&
             (this.y + 115) + (this.height - 125) > (bottle.y + 15) &&
@@ -62,7 +63,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
+        this.energy -= 2;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -79,4 +80,5 @@ class MovableObject extends DrawableObject {
         timepassed = timepassed / 1000; // Difference in s
         return timepassed < durationPlaySound;
     }
+
 }

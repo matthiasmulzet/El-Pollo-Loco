@@ -33,7 +33,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
-        }, 100);
+        }, 50);
     }
 
     checkThrowObjects() {
@@ -46,11 +46,34 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusbarHealth.setPercentage(this.character.energy);
+                if (//enemy.height == 50 &&
+                    this.character.y == 105 && ((this.character.x - enemy.x) < 51)) {
+                    let index = this.level.enemies.indexOf(enemy);
+                    // console.log('x enemy', this.level.enemies[index].x);
+                    // console.log('y enemy', this.level.enemies[index].y);
+                    // console.log('x character', this.character.x);
+                    // console.log('y character', this.character.y);
+                    // debugger;
+                    this.level.enemies[index].img.src = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+                }
+
+                // else if (enemy.height == 70 && this.character.y == 77.5) {
+                //     let index = this.level.enemies.indexOf(enemy);
+                //     console.log('x enemy', this.level.enemies[index].x);
+                //     console.log('y enemy', this.level.enemies[index].y);
+                //     console.log('x character', this.character.x);
+                //     console.log('y character', this.character.y);
+                //     debugger;
+                // }
+
+                else {
+                    this.character.hit();
+                    this.statusbarHealth.setPercentage(this.character.energy);
+                }
             }
         });
     }
+
 
     checkCollisionsCoins() {
         this.level.coins.forEach((coin) => {
@@ -63,6 +86,7 @@ class World {
         })
     }
 
+
     checkCollisionsBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingBottle(bottle)) {
@@ -73,6 +97,24 @@ class World {
             }
         })
     }
+
+    enemyDead(enemy) {
+        let index = this.level.enemies.indexOf(enemy);
+        return this.level.enemies[index].img.src == 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+    }
+
+    showEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.enemyDead(enemy)) {
+                this.level.enemies[enemy].loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
+            }
+            else {
+                this.addObjectsToMap(this.level.enemies);
+            }
+        });
+    }
+
+
 
     // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
     draw() {
@@ -92,7 +134,8 @@ class World {
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.enemies);
+
+        this.showEnemy();
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);

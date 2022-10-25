@@ -20,9 +20,9 @@ for (let i = 15; i < 30; i++) {
 
 const level1 = new Level(
     [
-        new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
-        new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
-        new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
+        // new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
+        // new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
+        // new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
         new SmallChicken(), new SmallChicken(), new SmallChicken(), new SmallChicken(),
         new SmallChicken(), new SmallChicken(), new SmallChicken(), new SmallChicken(),
         new SmallChicken(), new SmallChicken(), new SmallChicken(), new SmallChicken(),
