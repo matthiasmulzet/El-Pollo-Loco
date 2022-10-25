@@ -3,6 +3,13 @@ class Bottle extends MovableObject {
     width = 70;
 
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        botttom: 0
+    }
+
     constructor(imagePath) {
         super();
         this.loadImage(imagePath);

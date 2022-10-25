@@ -9,6 +9,7 @@ class SmallChicken extends MovableObject {
         'img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
     ];
 
+
     constructor() {
         super();
         this.loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png');

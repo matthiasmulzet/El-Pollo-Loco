@@ -33,7 +33,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
-        }, 50);
+        }, 100);
     }
 
     checkThrowObjects() {
@@ -46,15 +46,15 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (//enemy.height == 50 &&
-                    this.character.y == 105 && ((this.character.x - enemy.x) < 51)) {
-                    let index = this.level.enemies.indexOf(enemy);
-                    // console.log('x enemy', this.level.enemies[index].x);
-                    // console.log('y enemy', this.level.enemies[index].y);
-                    // console.log('x character', this.character.x);
-                    // console.log('y character', this.character.y);
-                    // debugger;
+                let index = this.level.enemies.indexOf(enemy);
+                if (this.character.y >= 105 && this.character.speedY <= -30) {
                     this.level.enemies[index].img.src = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+                    console.log('character y', this.character.y);
+                    console.log('speed y', this.character.speedY);
+                    this.character.speedY = 0;
+                    // setTimeout(() => {
+                    this.level.enemies.splice(index, 1);
+                    // }, 1000);
                 }
 
                 // else if (enemy.height == 70 && this.character.y == 77.5) {

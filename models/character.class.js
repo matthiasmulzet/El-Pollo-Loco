@@ -39,7 +39,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
-
     world;
 
     walking_sound = new Audio('../audio/running.mp3');
@@ -47,6 +46,14 @@ class Character extends MovableObject {
     collisionChicken = new Audio('../audio/collision-chicken.mp3');
     collisionCoin = new Audio('../audio/collect-coin.mp3');
     collisionBottle = new Audio('../audio/collect-bottle.mp3');
+
+
+    offset = {
+        top: 120,
+        left: 40,
+        right: 30,
+        bottom: 30
+    }
 
 
     constructor() {
@@ -85,6 +92,13 @@ class Character extends MovableObject {
                 this.jump_sound.play();
             }
 
+            if (!this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.RIGHT) {
+                this.speedY = 0;
+            }
+
+            if (!this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.LEFT) {
+                this.speedY = 0;
+            }
 
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
@@ -110,7 +124,6 @@ class Character extends MovableObject {
 
         }, 100); //10 frames pro Sekunde
     }
-
 
     jump() {
         this.speedY = 30;
