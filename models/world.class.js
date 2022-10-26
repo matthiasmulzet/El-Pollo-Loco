@@ -6,11 +6,7 @@ class World {
     statusbarCoin = new StatusbarCoin();
 
     throwableObjects = [];
-    deadChicken = new DeadChicken('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
-    deadSmallChicken = new DeadSmallChicken('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
-    contactChicken = 0;
-    contactSmallChicken = 0;
-
+    deadEnemies = [];
 
     canvas;
     ctx;
@@ -38,7 +34,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollisionsBottles();
-        }, 100);
+        }, 1000 / 60);
     }
 
     checkThrowObjects() {
@@ -55,15 +51,22 @@ class World {
 
                 if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 50) {
                     this.character.speedY = 0;
-                    this.contactSmallChicken = new Date().getTime();
-                    this.deadSmallChicken.x = this.level.enemies[index].x;
+                    this.level.enemies[index].deadChickenSound.play();
+                    this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
+                    this.deadEnemies.push(this.deadSmallChicken);
                     this.level.enemies.splice(index, 1);
                     this.level.enemies.forEach((enemy) => {
                         let xDifference = this.character.x - enemy.x;
                         if (xDifference < 75 && xDifference > -95) {
                             this.character.speedY = 0;
                             let index = this.level.enemies.indexOf(enemy);
-                            // this.deadSmallChicken.x = this.level.enemies[index].x;
+                            if (this.level.enemies[index].height == 70) {
+                                this.deadChicken = new DeadChicken(this.level.enemies[index].x);
+                                this.deadEnemies.push(this.deadChicken);
+                            } else if (this.level.enemies[index].height == 50) {
+                                this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
+                                this.deadEnemies.push(this.deadSmallChicken);
+                            }
                             this.level.enemies.splice(index, 1);
                         }
                     });
@@ -72,24 +75,29 @@ class World {
                 else if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 70) {
                     let index = this.level.enemies.indexOf(enemy);
                     this.character.speedY = 0;
-                    this.contactChicken = new Date().getTime();
-                    this.deadChicken.x = this.level.enemies[index].x;
+                    this.level.enemies[index].deadChickenSound.play();
+                    this.deadChicken = new DeadChicken(this.level.enemies[index].x);
+                    this.deadEnemies.push(this.deadChicken);
                     this.level.enemies.splice(index, 1);
                     this.level.enemies.forEach((enemy) => {
                         let xDifference = this.character.x - enemy.x;
                         if (xDifference < 75 && xDifference > -95) {
                             this.character.speedY = 0;
                             let index = this.level.enemies.indexOf(enemy);
-                            // this.deadChicken.x = this.level.enemies[index].x;
+                            if (this.level.enemies[index].height == 70) {
+                                this.deadChicken = new DeadChicken(this.level.enemies[index].x);
+                                this.deadEnemies.push(this.deadChicken);
+                            } else if (this.level.enemies[index].height == 50) {
+                                this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
+                                this.deadEnemies.push(this.deadSmallChicken);
+                            }
                             this.level.enemies.splice(index, 1);
                         }
                     });
                 }
 
-
                 else {
                     this.character.hit();
-                    console.log('enemy height', enemy.height);
                     this.statusbarHealth.setPercentage(this.character.energy);
                 }
             }
@@ -141,20 +149,7 @@ class World {
 
         this.addToMap(this.character);
 
-        // if (this.contactChicken > 0) {
-        //     this.addToMap(this.deadChicken);
-        //     setTimeout(() => {
-        //         this.contactChicken = 0;
-        //     }, 100);
-        // }
-
-        // if (this.contactSmallChicken > 0) {
-        //     this.addToMap(this.deadSmallChicken);
-        //     setTimeout(() => {
-        //         this.contactSmallChicken = 0;
-        //     }, 100);
-        // }
-
+        this.addObjectsToMap(this.deadEnemies);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);

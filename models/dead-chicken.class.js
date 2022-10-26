@@ -3,8 +3,9 @@ class DeadChicken extends MovableObject {
     width = 80;
     y = 350;
 
-    constructor(imagePath) {
+    constructor(x) {
         super();
-        this.loadImage(imagePath);
+        this.loadImage('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
+        this.x = x;
     }
 }

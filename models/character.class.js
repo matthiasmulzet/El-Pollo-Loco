@@ -90,8 +90,6 @@ class Character extends MovableObject {
                 this.walking_sound.pause();
                 this.jump();
                 this.jump_sound.play();
-                console.log('speed y', this.speedY);
-                console.log('character y', this.y);
             }
 
             if (!this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.RIGHT) {
