@@ -6,7 +6,11 @@ class World {
     statusbarCoin = new StatusbarCoin();
 
     throwableObjects = [];
+    deadChicken = new DeadChicken('img/3_enemies_chicken/chicken_normal/2_dead/dead.png');
     deadSmallChicken = new DeadSmallChicken('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
+    contactChicken = 0;
+    contactSmallChicken = 0;
+
 
     canvas;
     ctx;
@@ -48,24 +52,21 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy);
-                if (this.character.y >= 105 && this.character.speedY <= -30) {
+
+                if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 50) {
                     this.character.speedY = 0;
+                    this.contactSmallChicken = new Date().getTime();
                     this.deadSmallChicken.x = this.level.enemies[index].x;
                     this.level.enemies.splice(index, 1);
-                    setTimeout(() => {
-                        console.log('small chicken', this.deadSmallChicken.x);
-                        this.addToMap(this.deadSmallChicken);
-                    }, 2000);
                 }
 
-                // else if (enemy.height == 70 && this.character.y == 77.5) {
-                //     let index = this.level.enemies.indexOf(enemy);
-                //     console.log('x enemy', this.level.enemies[index].x);
-                //     console.log('y enemy', this.level.enemies[index].y);
-                //     console.log('x character', this.character.x);
-                //     console.log('y character', this.character.y);
-                //     debugger;
-                // }
+                else if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 70) {
+                    let index = this.level.enemies.indexOf(enemy);
+                    this.character.speedY = 0;
+                    this.contactChicken = new Date().getTime();
+                    this.deadChicken.x = this.level.enemies[index].x;
+                    this.level.enemies.splice(index, 1);
+                }
 
                 else {
                     this.character.hit();
@@ -74,6 +75,7 @@ class World {
             }
         });
     }
+
 
 
     checkCollisionsCoins() {
@@ -118,10 +120,20 @@ class World {
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addToMap(this.character);
-        // setTimeout(() => {
-        this.addToMap(this.deadSmallChicken);
-        // }, 2000);
 
+        // if (this.contactChicken > 0) {
+        //     this.addToMap(this.deadChicken);
+        //     setTimeout(() => {
+        //         this.contactChicken = 0;
+        //     }, 100);
+        // }
+
+        // if (this.contactSmallChicken > 0) {
+        //     this.addToMap(this.deadSmallChicken);
+        //     setTimeout(() => {
+        //         this.contactSmallChicken = 0;
+        //     }, 100);
+        // }
 
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.coins);

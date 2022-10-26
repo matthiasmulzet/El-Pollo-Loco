@@ -1,4 +1,4 @@
-class DeadSmallChicken extends MovableObject {
+class DeadChicken extends MovableObject {
     height = 80;
     width = 80;
     y = 350;
