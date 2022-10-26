@@ -90,6 +90,8 @@ class Character extends MovableObject {
                 this.walking_sound.pause();
                 this.jump();
                 this.jump_sound.play();
+                console.log('speed y', this.speedY);
+                console.log('character y', this.y);
             }
 
             if (!this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.RIGHT) {
@@ -107,7 +109,7 @@ class Character extends MovableObject {
             this.collisionChicken.pause();
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt(1)) {
+            } else if (this.isHurt(0.5)) {
                 this.playAnimation(this.IMAGES_HURT);
                 if (this.isHurt(0.5)) {
                     this.collisionChicken.play();

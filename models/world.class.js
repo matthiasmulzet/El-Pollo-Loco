@@ -58,6 +58,15 @@ class World {
                     this.contactSmallChicken = new Date().getTime();
                     this.deadSmallChicken.x = this.level.enemies[index].x;
                     this.level.enemies.splice(index, 1);
+                    this.level.enemies.forEach((enemy) => {
+                        let xDifference = this.character.x - enemy.x;
+                        if (xDifference < 75 && xDifference > -95) {
+                            this.character.speedY = 0;
+                            let index = this.level.enemies.indexOf(enemy);
+                            // this.deadSmallChicken.x = this.level.enemies[index].x;
+                            this.level.enemies.splice(index, 1);
+                        }
+                    });
                 }
 
                 else if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 70) {
@@ -66,10 +75,21 @@ class World {
                     this.contactChicken = new Date().getTime();
                     this.deadChicken.x = this.level.enemies[index].x;
                     this.level.enemies.splice(index, 1);
+                    this.level.enemies.forEach((enemy) => {
+                        let xDifference = this.character.x - enemy.x;
+                        if (xDifference < 75 && xDifference > -95) {
+                            this.character.speedY = 0;
+                            let index = this.level.enemies.indexOf(enemy);
+                            // this.deadChicken.x = this.level.enemies[index].x;
+                            this.level.enemies.splice(index, 1);
+                        }
+                    });
                 }
+
 
                 else {
                     this.character.hit();
+                    console.log('enemy height', enemy.height);
                     this.statusbarHealth.setPercentage(this.character.energy);
                 }
             }
