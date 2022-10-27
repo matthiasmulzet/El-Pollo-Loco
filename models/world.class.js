@@ -7,6 +7,7 @@ class World {
 
     throwableObjects = [];
     deadEnemies = [];
+    isInAir = false;
 
     canvas;
     ctx;
@@ -33,15 +34,24 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkCollisionsCoins();
-            this.checkCollisionsBottles();
+            this.checkCollectBottles();
         }, 1000 / 60);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.scoreBottles > 0) {
+        if (this.keyboard.D && this.scoreBottles > 0 && !this.isInAir) {
+            this.isInAir = true;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.scoreBottles -= 1;
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    // console.log('enemy x', enemy.x); TO DO
+                }
+            })
+            setTimeout(() => {
+                this.isInAir = false;
+            }, 500);
         }
     }
 
@@ -49,7 +59,6 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy);
-
                 if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 50) {
                     this.character.speedY = 0;
                     this.level.enemies[index].deadChickenSound.play();
@@ -105,6 +114,20 @@ class World {
         });
     }
 
+    checkCollisionsBottles() {
+        this.level.enemies.forEach((enemy) => {
+            this.throwableObjects.forEach((bottle) => {
+                if (this.throwableObjects[bottle].isColliding(enemy)) {
+                    let indexEnemy = this.level.enemies.indexOf(enemy);
+                    // let indexBottle = this.throwableObjects.indexOf(bottle);
+                    this.level.enemies[indexEnemy].deadChickenSound.play();
+                    this.deadChicken = new DeadChicken(this.level.enemies[indexEnemy].x);
+                    this.deadEnemies.push(this.deadChicken);
+                    this.level.enemies.splice(indexEnemy, 1);
+                }
+            })
+        })
+    }
 
 
     checkCollisionsCoins() {
@@ -119,7 +142,7 @@ class World {
     }
 
 
-    checkCollisionsBottles() {
+    checkCollectBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingBottle(bottle)) {
                 this.character.collisionBottle.play();
