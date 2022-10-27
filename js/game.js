@@ -7,7 +7,6 @@ function init() {
     world = new World(canvas, keyboard);
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen').classList.add('d-none');
-
     console.log('My character is', world.character);
 }
 
