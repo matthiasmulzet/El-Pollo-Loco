@@ -35,6 +35,42 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionsCoins();
             this.checkCollectBottles();
+            if (this.throwableObjects.length > 0) {
+                let arrayLength = this.throwableObjects.length - 1;
+                this.level.enemies.forEach((enemy) => {
+                    if (this.throwableObjects[arrayLength].x + this.throwableObjects[arrayLength].width > enemy.x &&
+                        this.throwableObjects[arrayLength].y + this.throwableObjects[arrayLength].height > enemy.y &&
+                        this.throwableObjects[arrayLength].x < enemy.x + enemy.width &&
+                        this.throwableObjects[arrayLength].y < enemy.y + enemy.height) {
+                        let indexEnemy = this.level.enemies.indexOf(enemy);
+                        this.level.enemies[indexEnemy].deadChickenSound.play();
+                        if (this.level.enemies[indexEnemy].height == 70) {
+                            this.deadChicken = new DeadChicken(this.level.enemies[indexEnemy].x);
+                            this.deadEnemies.push(this.deadChicken);
+                        }
+                        if (this.level.enemies[indexEnemy].height == 50) {
+                            this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[indexEnemy].x);
+                            this.deadEnemies.push(this.deadSmallChicken);
+                        }
+                        this.level.enemies.splice(indexEnemy, 1);
+                        this.level.enemies.forEach((enemy) => {
+                            let xDifference = this.throwableObjects[arrayLength].x - enemy.x;
+                            if (xDifference < 75 && xDifference > -95) {
+                                let index = this.level.enemies.indexOf(enemy);
+                                if (this.level.enemies[index].height == 70) {
+                                    this.deadChicken = new DeadChicken(this.level.enemies[index].x);
+                                    this.deadEnemies.push(this.deadChicken);
+                                } else if (this.level.enemies[index].height == 50) {
+                                    this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
+                                    this.deadEnemies.push(this.deadSmallChicken);
+                                }
+                                this.level.enemies.splice(index, 1);
+                            }
+                        });
+                    }
+
+                })
+            }
         }, 1000 / 60);
     }
 
@@ -44,22 +80,21 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.scoreBottles -= 1;
-            this.level.enemies.forEach((enemy) => {
-                if (bottle.isColliding(enemy)) {
-                    // console.log('enemy x', enemy.x); TO DO
-                }
-            })
+
             setTimeout(() => {
                 this.isInAir = false;
             }, 500);
         }
     }
 
+
+
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy);
-                if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 50) {
+                if (this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && this.level.enemies[index].height == 50) {
                     this.character.speedY = 0;
                     this.level.enemies[index].deadChickenSound.play();
                     this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
@@ -77,12 +112,11 @@ class World {
                                 this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
                                 this.deadEnemies.push(this.deadSmallChicken);
                             }
-                            this.level.enemies.splice(index, 1);
                         }
                     });
                 }
 
-                else if (this.character.y >= 105 && this.character.speedY <= -30 && this.level.enemies[index].height == 70) {
+                else if (this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && this.level.enemies[index].height == 70) {
                     let index = this.level.enemies.indexOf(enemy);
                     this.character.speedY = 0;
                     this.level.enemies[index].deadChickenSound.play();
@@ -112,21 +146,6 @@ class World {
                 }
             }
         });
-    }
-
-    checkCollisionsBottles() {
-        this.level.enemies.forEach((enemy) => {
-            this.throwableObjects.forEach((bottle) => {
-                if (this.throwableObjects[bottle].isColliding(enemy)) {
-                    let indexEnemy = this.level.enemies.indexOf(enemy);
-                    // let indexBottle = this.throwableObjects.indexOf(bottle);
-                    this.level.enemies[indexEnemy].deadChickenSound.play();
-                    this.deadChicken = new DeadChicken(this.level.enemies[indexEnemy].x);
-                    this.deadEnemies.push(this.deadChicken);
-                    this.level.enemies.splice(indexEnemy, 1);
-                }
-            })
-        })
     }
 
 
