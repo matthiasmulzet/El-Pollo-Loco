@@ -7,21 +7,21 @@ class DrawableObject {
     height;
     width = 150;
 
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken ||
-            this instanceof Coin || this instanceof Bottle || this instanceof ThrowableObject) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
+        if (this.instancesOfObjects) {
+            this.setStats(ctx);
             if (this instanceof Character) {
                 ctx.rect(this.x + 25, this.y + 115, this.width - 40, this.height - 125);
             }
@@ -40,6 +40,20 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
+
+    setStats(ctx) {
+        ctx.beginPath();
+        ctx.lineWidth = '5';
+        ctx.strokeStyle = 'blue';
+    }
+
+
+    instancesOfObjects() {
+        return this instanceof Character || this instanceof Chicken || this instanceof SmallChicken ||
+            this instanceof Coin || this instanceof Bottle || this instanceof ThrowableObject
+    }
+
 
     loadImages(arr) {
         arr.forEach((path) => {

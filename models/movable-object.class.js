@@ -1,7 +1,7 @@
 class MovableObject extends DrawableObject {
     speed = 0;
-    otherDirection = false;
     speedY = 0;
+    otherDirection = false;
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
@@ -19,14 +19,20 @@ class MovableObject extends DrawableObject {
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+                this.reduceY();
                 if (this instanceof Character && this.y > 135) {
                     this.y = 135;
                 }
             }
         }, 1000 / 25);
     }
+
+
+    reduceY() {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+    }
+
 
     isAboveGround() {
         if (this instanceof ThrowableObject) { //throwable objects should always fall
@@ -36,6 +42,7 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     playAnimation(images) {
         let i = this.currentImage % (images.length);
         let path = images[i];
@@ -43,13 +50,16 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     moveRight() {
         this.x += this.speed;
     }
 
+
     moveLeft() {
         this.x -= this.speed;
     }
+
 
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -57,6 +67,7 @@ class MovableObject extends DrawableObject {
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
+
 
     isCollidingCoin(coin) {
         return (this.x + 25) + (this.width - 40) > (coin.x + 45) &&
@@ -73,6 +84,7 @@ class MovableObject extends DrawableObject {
             (this.y + 115) < (bottle.y + 15) + (bottle.height - 20)
     }
 
+
     hit() {
         this.energy -= 0.5;
         if (this.energy < 0) {
@@ -82,9 +94,11 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
     isDead() {
         return this.energy == 0;
     }
+
 
     isHurt(durationPlaySound) {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms

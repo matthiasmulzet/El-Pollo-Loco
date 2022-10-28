@@ -5,13 +5,12 @@ class Cloud extends MovableObject {
     speed = 0.15;
 
 
-
     constructor(imagePath, x) {
         super().loadImage(imagePath);
-
         this.x = x;
         this.animate();
     }
+
 
     animate() {
         setInterval(() => {

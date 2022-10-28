@@ -8,6 +8,7 @@ class Coin extends MovableObject {
         'img/8_coin/coin_2.png'
     ];
 
+
     offset = {
         top: 0,
         left: 0,
@@ -19,11 +20,16 @@ class Coin extends MovableObject {
         super();
         this.loadImage('img/8_coin/coin_1.png');
         this.loadImages(this.IMAGES);
-
-        this.x = 400 + Math.random() * 6800;
-        this.y = 40 + Math.random() * 250;
+        this.placeCoins();
         this.animate();
     }
+
+
+    placeCoins() {
+        this.x = 400 + Math.random() * 6800;
+        this.y = 40 + Math.random() * 250;
+    }
+
 
     animate() {
         setInterval(() => {

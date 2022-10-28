@@ -76,48 +76,57 @@ class Character extends MovableObject {
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
-            if (this.shouldWalkToRight()) {
-                this.walkRight();
-            }
-
-            if (this.shouldWalkToLeft()) {
-                this.walkLeft();
-            }
-
-            if (this.shouldJump()) {
-                this.walking_sound.pause();
-                this.jump();
-                this.jump_sound.play();
-            }
-
-            if (this.noJump()) {
-                this.speedY = 0;
-            }
-
+            this.moveLeftOrRight();
+            this.jumpOrNoJump();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
         setInterval(() => {
             this.collisionChicken.pause();
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt(0.5)) {
-                this.playAnimation(this.IMAGES_HURT);
-                if (this.isHurt(0.5)) {
-                    this.collisionChicken.play();
-                }
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else {
-                this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    // Walk Animation
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-            }
-
+            this.animateCharacterImages();
         }, 100); //10 frames pro Sekunde
     }
+
+
+    animateCharacterImages() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt(0.5)) {
+            this.animateHurt();
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else {
+            this.animateWalking();
+        }
+    }
+
+
+    animateWalking() {
+        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING); // Walk Animation
+        }
+    }
+
+
+    animateHurt() {
+        this.playAnimation(this.IMAGES_HURT);
+        if (this.isHurt(0.5)) {
+            this.collisionChicken.play();
+        }
+    }
+
+
+    moveLeftOrRight() {
+        if (this.shouldWalkToRight()) {
+            this.walkRight();
+        }
+
+        if (this.shouldWalkToLeft()) {
+            this.walkLeft();
+        }
+    }
+
 
     shouldWalkToRight() {
         return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
@@ -133,11 +142,6 @@ class Character extends MovableObject {
     }
 
 
-    shouldJump() {
-        return this.world.keyboard.SPACE && !this.isAboveGround()
-    }
-
-
     shouldWalkToLeft() {
         return this.world.keyboard.LEFT && this.x > 100;
     }
@@ -150,6 +154,25 @@ class Character extends MovableObject {
             this.walking_sound.play();
         }
     }
+
+
+    jumpOrNoJump() {
+        if (this.shouldJump()) {
+            this.walking_sound.pause();
+            this.jump();
+            this.jump_sound.play();
+        }
+
+        if (this.noJump()) {
+            this.speedY = 0;
+        }
+    }
+
+
+    shouldJump() {
+        return this.world.keyboard.SPACE && !this.isAboveGround()
+    }
+
 
     noJump() {
         return !this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.RIGHT ||

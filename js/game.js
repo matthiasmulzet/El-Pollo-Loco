@@ -2,13 +2,14 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen').classList.add('d-none');
-    console.log('My character is', world.character);
 }
+
 
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 38) {

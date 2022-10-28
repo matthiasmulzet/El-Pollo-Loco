@@ -1,23 +1,27 @@
-
 let allCoins = [];
 let allBottles = [];
 
+//create 30 coins and push them in Array
 for (let i = 0; i < 30; i++) {
     let coin = new Coin();
     allCoins.push(coin);
 }
 
+
+//create 15 Bottles who looks to the left and push them in Array
 for (let i = 0; i < 15; i++) {
     let bottle = new Bottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
     allBottles.push(bottle);
 }
 
+
+//create 15 Bottles who looks to the right and push them in Array
 for (let i = 15; i < 30; i++) {
     let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png');
     allBottles.push(bottle);
 }
 
-
+//all Objects from the Game except Character
 const level1 = new Level(
     [
         new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(),
