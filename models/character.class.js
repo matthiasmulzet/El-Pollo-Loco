@@ -175,8 +175,8 @@ class Character extends MovableObject {
 
 
     noJump() {
-        return !this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.RIGHT ||
-            !this.world.keyboard.SPACE && !this.isAboveGround() && this.world.keyboard.LEFT;
+        return !this.world.keyboard.SPACE && !this.isAboveGround() || //&& this.world.keyboard.RIGHT 
+            !this.world.keyboard.SPACE && !this.isAboveGround() //&& this.world.keyboard.LEFT
     }
 
 
