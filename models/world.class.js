@@ -45,10 +45,19 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (this.throwableObjects[actualBottle].isColliding(enemy)) {
                     let indexEnemy = this.level.enemies.indexOf(enemy);
+                    let indexBottle = this.throwableObjects.indexOf(actualBottle);
                     this.throwableObjects[actualBottle].colliding = true;
-                    this.throwableObjects[actualBottle].y = this.level.enemies[indexEnemy].y;
-                    this.throwableObjects[actualBottle].x = this.level.enemies[indexEnemy].x;
                     this.level.enemies[indexEnemy].deadChickenSound.play();
+                    setTimeout(() => {
+                        this.throwableObjects.splice(indexBottle, 1);
+                    }, 100);
+                    if (this.throwableObjects[actualBottle].y > this.level.enemies[indexEnemy].y) {
+                        this.throwableObjects[actualBottle].y = this.level.enemies[indexEnemy].y;
+                        this.throwableObjects[actualBottle].x = this.level.enemies[indexEnemy].x;
+                        this.throwableObjects[actualBottle].speedY = 0;
+                    }
+
+
                     this.collidingSmallOrNormalChicken(indexEnemy);
                     this.bottleEliminateNearbyEnemies(actualBottle);
                 }

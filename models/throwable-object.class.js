@@ -37,21 +37,21 @@ class ThrowableObject extends MovableObject {
         this.speedY = 25;
         this.applyGravity();
         setInterval(() => {
-            this.x += 20;
-            console.log('y position', this.y);
-            // if (this.y < 80) {
-            //     this.y = 80;
-            //     this.speedY = 0;
-            // }
+
+
             if (this.colliding == true) {
                 this.playAnimation(this.BOTTLE_SPLASH);
+                this.y = 300;
                 setTimeout(() => {
                     this.colliding = false;
                 }, 1000);
             }
-            else {
+
+            else if (this.colliding == false) {
                 this.playAnimation(this.BOTTLE_IMAGES);
+                this.x += 20;
             }
+
         }, 50);
     }
 }
