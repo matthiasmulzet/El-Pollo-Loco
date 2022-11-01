@@ -35,7 +35,18 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkBottleHit();
+            this.checkEndboss();
         }, 1000 / 60);
+    }
+
+
+    checkEndboss() {
+        let lastIndex = this.level.enemies.length - 1;
+        let endboss = this.level.enemies[lastIndex];
+        let xDifference = endboss.x - this.character.x;
+        if (xDifference < 580) {
+            endboss.inScreen = true;
+        }
     }
 
 
@@ -44,20 +55,14 @@ class World {
             let actualBottle = this.throwableObjects.length - 1;
             this.level.enemies.forEach((enemy) => {
                 if (this.throwableObjects[actualBottle].isColliding(enemy)) {
+                    this.throwableObjects[actualBottle].bottleBreak.play();
                     let indexEnemy = this.level.enemies.indexOf(enemy);
                     let indexBottle = this.throwableObjects.indexOf(actualBottle);
                     this.throwableObjects[actualBottle].colliding = true;
                     this.level.enemies[indexEnemy].deadChickenSound.play();
                     setTimeout(() => {
                         this.throwableObjects.splice(indexBottle, 1);
-                    }, 100);
-                    if (this.throwableObjects[actualBottle].y > this.level.enemies[indexEnemy].y) {
-                        this.throwableObjects[actualBottle].y = this.level.enemies[indexEnemy].y;
-                        this.throwableObjects[actualBottle].x = this.level.enemies[indexEnemy].x;
-                        this.throwableObjects[actualBottle].speedY = 0;
-                    }
-
-
+                    }, 400);
                     this.collidingSmallOrNormalChicken(indexEnemy);
                     this.bottleEliminateNearbyEnemies(actualBottle);
                 }
@@ -130,8 +135,16 @@ class World {
 
     checkThrowObjects() {
         if (this.wantThrowBottle()) {
+            let bottle;
             this.isInAir = true;
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            if (this.character.otherDirection == true) {
+                bottle = new ThrowableObject(this.character.x, this.character.y + 100);
+                bottle.otherDirection = true;
+            }
+
+            else {
+                bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            }
             this.throwableObjects.push(bottle);
             this.scoreBottles -= 1;
             this.throwNextBottle();

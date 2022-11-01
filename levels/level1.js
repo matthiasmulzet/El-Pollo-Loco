@@ -73,5 +73,5 @@ const level1 = new Level(
         allBottles[12], allBottles[13], allBottles[14], allBottles[15], allBottles[16], allBottles[17],
         allBottles[18], allBottles[19], allBottles[20], allBottles[21], allBottles[22], allBottles[23],
         allBottles[24], allBottles[25], allBottles[26], allBottles[27], allBottles[28], allBottles[29]
-    ]
+    ],
 );

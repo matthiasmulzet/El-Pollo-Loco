@@ -19,6 +19,8 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
+    bottleBreak = new Audio('../audio/bottle-break.mp3');
+
 
     constructor(x, y) {
         super();
@@ -34,14 +36,21 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
-        this.speedY = 25;
+        if (this.chaotherDirection == true) {
+            this.speedY = -25;
+            console.log('other direction');
+        }
+        else {
+            this.speedY = 25;
+        }
         this.applyGravity();
         setInterval(() => {
 
 
             if (this.colliding == true) {
                 this.playAnimation(this.BOTTLE_SPLASH);
-                this.y = 300;
+                this.y = 350;
+                this.speedY = 0;
                 setTimeout(() => {
                     this.colliding = false;
                 }, 1000);
@@ -49,7 +58,12 @@ class ThrowableObject extends MovableObject {
 
             else if (this.colliding == false) {
                 this.playAnimation(this.BOTTLE_IMAGES);
-                this.x += 20;
+                if (this.otherDirection == true) {
+                    this.x -= 20;
+                }
+                else {
+                    this.x += 20;
+                }
             }
 
         }, 50);
