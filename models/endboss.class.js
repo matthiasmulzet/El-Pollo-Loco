@@ -3,7 +3,6 @@ class Endboss extends MovableObject {
     height = 400;
     y = 50;
 
-    inScreen = false;
 
     IMAGES_WATCHING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',

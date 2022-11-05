@@ -3,6 +3,7 @@ class World {
     statusbarHealth = new StatusbarHealth();
     statusbarBottle = new StatusbarBottle();
     statusbarCoin = new StatusbarCoin();
+    statusbarEndboss = new StatusbarEndboss();
     level = level1;
 
     throwableObjects = [];
@@ -46,6 +47,7 @@ class World {
         let xDifference = endboss.x - this.character.x;
         if (xDifference < 580) {
             endboss.inScreen = true;
+            this.statusbarEndboss.inScreen = true;
         }
     }
 
@@ -54,18 +56,20 @@ class World {
         if (this.bottlesToThrow()) {
             let actualBottle = this.throwableObjects.length - 1;
             this.level.enemies.forEach((enemy) => {
-                if (this.throwableObjects[actualBottle].isColliding(enemy)) {
-                    this.throwableObjects[actualBottle].bottleBreak.play();
-                    let indexEnemy = this.level.enemies.indexOf(enemy);
-                    let indexBottle = this.throwableObjects.indexOf(actualBottle);
-                    this.throwableObjects[actualBottle].colliding = true;
-                    this.level.enemies[indexEnemy].deadChickenSound.play();
-                    setTimeout(() => {
-                        this.throwableObjects.splice(indexBottle, 1);
-                    }, 400);
-                    this.collidingSmallOrNormalChicken(indexEnemy);
-                    this.bottleEliminateNearbyEnemies(actualBottle);
-                }
+                this.throwableObjects.forEach((bottle) => {
+                    if (bottle.isColliding(enemy)) {
+                        bottle.bottleBreak.play();
+                        let indexEnemy = this.level.enemies.indexOf(enemy);
+                        let indexBottle = this.throwableObjects.indexOf(bottle);
+                        bottle.colliding = true;
+                        this.level.enemies[indexEnemy].deadChickenSound.play();
+                        setTimeout(() => {
+                            this.throwableObjects.splice(indexBottle, 1);
+                        }, 400);
+                        this.collidingSmallOrNormalChicken(indexEnemy);
+                        this.bottleEliminateNearbyEnemies(actualBottle);
+                    }
+                })
             })
         }
     }
@@ -236,6 +240,9 @@ class World {
         this.addToMap(this.statusbarHealth);
         this.addToMap(this.statusbarBottle);
         this.addToMap(this.statusbarCoin);
+        if (this.statusbarEndboss.inScreen == true) {
+            this.addToMap(this.statusbarEndboss);
+        }
         this.drawScore();
         this.ctx.translate(this.camera_x, 0); //Forwards
 
