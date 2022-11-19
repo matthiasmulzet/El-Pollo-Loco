@@ -89,6 +89,10 @@ h1 {
     transition: all 200ms ease-in-out;
 }
 
+.bg-light-black {
+    background: rgba(0, 0, 0, 0.5);
+}
+
 .start-game {
     top: 30px;
     font-size: 22px;
@@ -181,4 +185,17 @@ h1 {
     cursor: pointer;
     color: black;
     text-decoration: none;
+}
+
+
+.game-over-or-win-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
+    z-index: 2;
+    background-image: linear-gradient(180deg, yellow, rgb(255, 230, 0), orange);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

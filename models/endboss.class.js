@@ -31,40 +31,62 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png',
     ]
 
+    IMAGES_DEAD = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
+
+    ]
+
     endbossHurt = new Audio('../audio/endboss-hurt.mp3');
+    endbossDead = new Audio('../audio/win.mp3');
 
     constructor() {
         super();
         this.loadImages(this.IMAGES_WATCHING);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = 2000;
         this.animate();
     }
 
     animate() {
         setInterval(() => {
-            if (this.inScreen == true && this.otherDirection == false) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.x -= this.speed;
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+                this.endbossDead.play();
+                setTimeout(() => {
+                    setInterval(() => {
+                        this.y += 10;
+                    }, 100);
+                }, 2000);
+                setTimeout(() => {
+                    this.endbossDead.pause();
+                }, 5000);
             }
 
-            else {
-                this.playAnimation(this.IMAGES_WATCHING);
-            }
-
-            if (this.otherDirection == true) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.x += this.speed;
-            }
-
-            if (this.isHurt(0.5)) {
+            else if (this.isHurt(0.5)) {
                 this.speed = 0;
                 this.playAnimation(this.IMAGES_HURT);
                 setTimeout(() => {
                     this.increasedSpeed += 1;
                     this.speed = 10 + this.increasedSpeed;
                 }, 400);
+            }
+
+            else if (this.inScreen == true && this.otherDirection == false) {
+                this.playAnimation(this.IMAGES_WALKING);
+                this.x -= this.speed;
+            }
+
+            else if (this.otherDirection == true) {
+                this.playAnimation(this.IMAGES_WALKING);
+                this.x += this.speed;
+            }
+
+            else {
+                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 100);
     }

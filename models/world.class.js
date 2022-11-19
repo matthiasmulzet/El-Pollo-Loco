@@ -50,7 +50,7 @@ class World {
             this.statusbarEndboss.inScreen = true;
         }
 
-        if (endboss.x + 100 < this.character.x) {
+        if (endboss.x + 200 < this.character.x) {
             endboss.otherDirection = true;
         }
 

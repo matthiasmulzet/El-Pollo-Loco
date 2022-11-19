@@ -35,15 +35,18 @@
     <title>El Pollo Loco</title>
 </head>
 
-<body onload="init()">
+<body>
 
     <h1>El Pollo Loco</h1>
 
-    <div id="startscreen" class="startscreen d-none">
+    <div id="startscreen" class="startscreen">
+        <div class="game-over-or-win-text d-none">!!! WIN !!!</div>
+        <!--.bg-light-black hinzufügen als background-->
         <div class="overlay">
             <img id="startscreen-img" class="startscreen-img no-grayscale"
                 src="img/9_intro_outro_screens/start/startscreen_1.png">
         </div>
+
         <div onclick="init()" class="start-game bg-styling p-absolute-middle">Start Game</div>
 
         <div class="settings bg-styling">
