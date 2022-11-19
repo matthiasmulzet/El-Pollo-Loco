@@ -49,6 +49,14 @@ class World {
             endboss.inScreen = true;
             this.statusbarEndboss.inScreen = true;
         }
+
+        if (endboss.x + 100 < this.character.x) {
+            endboss.otherDirection = true;
+        }
+
+        else {
+            endboss.otherDirection = false;
+        }
     }
 
 
@@ -62,16 +70,31 @@ class World {
                         let indexEnemy = this.level.enemies.indexOf(enemy);
                         let indexBottle = this.throwableObjects.indexOf(bottle);
                         bottle.colliding = true;
-                        this.level.enemies[indexEnemy].deadChickenSound.play();
-                        setTimeout(() => {
-                            this.throwableObjects.splice(indexBottle, 1);
-                        }, 400);
-                        this.collidingSmallOrNormalChicken(indexEnemy);
-                        this.bottleEliminateNearbyEnemies(actualBottle);
+                        if (this.collidingWithEndboss(indexEnemy)) {
+                            this.level.enemies[indexEnemy].endbossHurt.play();
+                            setTimeout(() => {
+                                this.throwableObjects.splice(indexBottle, 1);
+                            }, 400);
+                            this.level.enemies[indexEnemy].hit();
+                            this.statusbarEndboss.setPercentage(this.level.enemies[indexEnemy].energy);
+                        }
+                        else {
+                            this.level.enemies[indexEnemy].deadChickenSound.play();
+                            setTimeout(() => {
+                                this.throwableObjects.splice(indexBottle, 1);
+                            }, 400);
+                            this.collidingSmallOrNormalChicken(indexEnemy);
+                            this.bottleEliminateNearbyEnemies(actualBottle);
+                        }
                     }
                 })
             })
         }
+    }
+
+
+    collidingWithEndboss(indexEnemy) {
+        return indexEnemy == (this.level.enemies.length - 1)
     }
 
 
@@ -123,12 +146,13 @@ class World {
         if (this.level.enemies[indexEnemy].height == 70) {
             this.deadChicken = new DeadChicken(this.level.enemies[indexEnemy].x);
             this.deadEnemies.push(this.deadChicken);
+            this.level.enemies.splice(indexEnemy, 1);
         }
         else if (this.level.enemies[indexEnemy].height == 50) {
             this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[indexEnemy].x);
             this.deadEnemies.push(this.deadSmallChicken);
+            this.level.enemies.splice(indexEnemy, 1);
         }
-        this.level.enemies.splice(indexEnemy, 1);
     }
 
 
@@ -249,7 +273,11 @@ class World {
         this.addToMap(this.character);
 
         this.addObjectsToMap(this.deadEnemies);
-        this.addObjectsToMap(this.level.enemies);
+        for (let i = 0; i < this.level.enemies.length - 1; i++) {
+            const actualEnemy = this.level.enemies[i];
+            this.addToMap(actualEnemy);
+        }
+        this.addToMap(this.level.enemies[this.level.enemies.length - 1]);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.throwableObjects);
