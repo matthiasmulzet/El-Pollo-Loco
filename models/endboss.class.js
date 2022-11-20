@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
     speed = 10;
     increasedSpeed = 0;
     otherDirection = false;
+    hadFirstContact = false;
 
 
     IMAGES_WATCHING = [
@@ -52,41 +53,52 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        let i = 1;
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.endbossDead.play();
+            if (this.hadFirstContact == true && i > 0) {
+                this.playAnimation(this.IMAGES_WATCHING);
                 setTimeout(() => {
-                    setInterval(() => {
-                        this.y += 10;
-                    }, 100);
-                }, 2000);
-                setTimeout(() => {
-                    this.endbossDead.pause();
-                }, 5000);
-            }
-
-            else if (this.isHurt(0.5)) {
-                this.speed = 0;
-                this.playAnimation(this.IMAGES_HURT);
-                setTimeout(() => {
-                    this.increasedSpeed += 1;
-                    this.speed = 10 + this.increasedSpeed;
-                }, 400);
-            }
-
-            else if (this.inScreen == true && this.otherDirection == false) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.x -= this.speed;
-            }
-
-            else if (this.otherDirection == true) {
-                this.playAnimation(this.IMAGES_WALKING);
-                this.x += this.speed;
+                    i = 0;
+                    this.hadFirstContact = false;
+                }, 1000);
             }
 
             else {
-                this.playAnimation(this.IMAGES_WALKING);
+                if (this.isDead()) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    this.endbossDead.play();
+                    setTimeout(() => {
+                        setInterval(() => {
+                            this.y += 10;
+                        }, 100);
+                    }, 2000);
+                    setTimeout(() => {
+                        this.endbossDead.pause();
+                    }, 5000);
+                }
+
+                else if (this.isHurt(0.5)) {
+                    this.speed = 0;
+                    this.playAnimation(this.IMAGES_HURT);
+                    setTimeout(() => {
+                        this.increasedSpeed += 1;
+                        this.speed = 10 + this.increasedSpeed;
+                    }, 400);
+                }
+
+                else if (this.inScreen == true && this.otherDirection == false) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                    this.x -= this.speed;
+                }
+
+                else if (this.otherDirection == true) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                    this.x += this.speed;
+                }
+
+                else {
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
             }
         }, 100);
     }

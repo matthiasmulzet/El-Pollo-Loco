@@ -46,6 +46,7 @@ class World {
         let endboss = this.level.enemies[lastIndex];
         let xDifference = endboss.x - this.character.x;
         if (xDifference < 580) {
+            endboss.hadFirstContact = true;
             endboss.inScreen = true;
             this.statusbarEndboss.inScreen = true;
         }
