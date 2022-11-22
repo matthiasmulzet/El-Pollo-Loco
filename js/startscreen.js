@@ -40,3 +40,16 @@ function closeFullScreen() {
     document.getElementById('fullscreen').onclick = function () { showFullScreen() };
 }
 
+
+
+function showGameOverOrWin(text) {
+    document.getElementById('text-game-over-or-win').innerHTML = text;
+    document.getElementById("overlay-game-over-or-win").style.display = "block";
+    location.reload();
+}
+
+
+
+// function off() {
+//     document.getElementById("overlay").style.display = "none";
+// }

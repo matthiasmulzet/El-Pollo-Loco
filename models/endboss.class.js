@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     otherDirection = false;
     hadFirstContact = false;
 
+    world;
 
     IMAGES_WATCHING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -71,9 +72,12 @@ class Endboss extends MovableObject {
                         setInterval(() => {
                             this.y += 10;
                         }, 100);
+                        showGameOverOrWin('!!! WIN !!!');
                     }, 2000);
                     setTimeout(() => {
+                        this.world.character.walking_sound.pause();
                         this.endbossDead.pause();
+                        clearAllIntervals();
                     }, 5000);
                 }
 

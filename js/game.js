@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 level = level1;
+let intervalIds = [];
 
 
 function init() {
@@ -13,6 +14,26 @@ function init() {
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen').classList.add('d-none');
 }
+
+
+// function setStoppableInterval(fn, time) {
+//     let id = setInterval(fn, time);
+//     intervalIds.push(id);
+// }
+
+
+// function stopGame() {
+//     //Intervalle beenden
+//     intervalIds.forEach(clearInterval);
+// }
+
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) {
+        window.clearInterval(i);
+    }
+}
+
 
 
 window.addEventListener('keydown', (e) => {

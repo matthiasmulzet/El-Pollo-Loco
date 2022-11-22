@@ -23,12 +23,26 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
-        this.setWorld();
+        this.setWorldEndboss();
+        this.setWorldCharacter();
         this.run();
     }
 
-    setWorld() {
+
+    /**
+     * due to this function we get access to this file in the character.class.js file
+     */
+    setWorldCharacter() {
         this.character.world = this;
+    }
+
+
+    /**
+     * due to this function we get access to this file in the enboss.class.js file
+     */
+    setWorldEndboss() {
+        let endboss = this.level.enemies[this.level.enemies.length - 1];
+        endboss.world = this;
     }
 
     run() {

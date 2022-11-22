@@ -47,6 +47,7 @@ class Character extends MovableObject {
     collisionChicken = new Audio('../audio/collision-chicken.mp3');
     collisionCoin = new Audio('../audio/collect-coin.mp3');
     collisionBottle = new Audio('../audio/collect-bottle.mp3');
+    gameOver = new Audio('../audio/game-over.mp3');
 
     offset = {
         top: 120,
@@ -91,6 +92,10 @@ class Character extends MovableObject {
     animateCharacterImages() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
+            // this.gameOver.play();
+            // clearAllIntervals();
+            // this.walking_sound.pause();
+            // showGameOverOrWin('GAME OVER');
         } else if (this.isHurt(0.5)) {
             this.animateHurt();
         } else if (this.isAboveGround()) {
