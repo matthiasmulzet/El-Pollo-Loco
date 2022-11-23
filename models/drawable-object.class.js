@@ -25,7 +25,7 @@ class DrawableObject {
         if (this.instancesOfObjects) {
             this.setStats(ctx);
             if (this instanceof Character) {
-                ctx.rect(this.x + 25, this.y + 115, this.width - 40, this.height - 125);
+                ctx.rect(this.x + 35, this.y + 115, this.width - 65, this.height - 125);
             }
 
             else if (this instanceof Coin) {
@@ -34,6 +34,10 @@ class DrawableObject {
 
             else if (this instanceof Bottle) {
                 ctx.rect(this.x + 30, this.y + 15, this.width - 40, this.height - 20);
+            }
+
+            else if (this instanceof Endboss) {
+                ctx.rect(this.x + 40, this.y + 70, this.width - 50, this.height - 80)
             }
 
             else {

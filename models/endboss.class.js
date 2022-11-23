@@ -67,17 +67,22 @@ class Endboss extends MovableObject {
             else {
                 if (this.isDead()) {
                     this.playAnimation(this.IMAGES_DEAD);
+                    this.world.character.energy = 50; //energy will be increased, that character 
+                    //doesn't die immediately after end boss dies
                     this.endbossDead.play();
                     setTimeout(() => {
                         setInterval(() => {
                             this.y += 10;
                         }, 100);
+                        this.world.character.walking_sound.pause();
                         showGameOverOrWin('!!! WIN !!!');
                     }, 2000);
                     setTimeout(() => {
-                        this.world.character.walking_sound.pause();
                         this.endbossDead.pause();
                         clearAllIntervals();
+                        setTimeout(() => {
+                            document.location.reload();
+                        }, 3000);
                     }, 5000);
                 }
 
@@ -85,7 +90,7 @@ class Endboss extends MovableObject {
                     this.speed = 0;
                     this.playAnimation(this.IMAGES_HURT);
                     setTimeout(() => {
-                        this.increasedSpeed += 1;
+                        this.increasedSpeed += 0.5;
                         this.speed = 10 + this.increasedSpeed;
                     }, 400);
                 }

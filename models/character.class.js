@@ -92,10 +92,20 @@ class Character extends MovableObject {
     animateCharacterImages() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
-            // this.gameOver.play();
-            // clearAllIntervals();
-            // this.walking_sound.pause();
-            // showGameOverOrWin('GAME OVER');
+            clearAllIntervals();
+            this.gameOver.play();
+            this.walking_sound.pause();
+            setTimeout(() => {
+                setInterval(() => {
+                    this.y += 10;
+                }, 100);
+                showGameOverOrWin('GAME OVER');
+            }, 2000);
+            setTimeout(() => {
+                setTimeout(() => {
+                    document.location.reload();
+                }, 3000);
+            }, 5000);
         } else if (this.isHurt(0.5)) {
             this.animateHurt();
         } else if (this.isAboveGround()) {

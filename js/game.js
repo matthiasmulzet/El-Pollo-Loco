@@ -7,25 +7,30 @@ let intervalIds = [];
 
 function init() {
     canvas = document.getElementById('canvas');
+    checkOrientation();
     initLevel();
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);
     document.getElementById('canvas').classList.remove('d-none');
-    document.getElementById('startscreen').classList.add('d-none');
+    document.getElementById('test').classList.add('d-none');
 }
 
 
-// function setStoppableInterval(fn, time) {
-//     let id = setInterval(fn, time);
-//     intervalIds.push(id);
-// }
-
-
-// function stopGame() {
-//     //Intervalle beenden
-//     intervalIds.forEach(clearInterval);
-// }
+/**
+ * if you have a Problem with the Opera Browser, this function should fix it
+ */
+function checkOrientation() {
+    if (window.matchMedia("(orientation: landscape)").matches) {
+        if (window.innerHeight < 480) {
+            newHeight = window.innerHeight;
+            document.getElementById('canvas').style.height = `${newHeight}px`;
+        }
+    }
+    else {
+        document.getElementById('canvas').style.height = `100%`;
+    }
+}
 
 
 function clearAllIntervals() {

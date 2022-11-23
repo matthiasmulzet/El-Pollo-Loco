@@ -36,7 +36,6 @@ class World {
         this.character.world = this;
     }
 
-
     /**
      * due to this function we get access to this file in the enboss.class.js file
      */
@@ -85,6 +84,7 @@ class World {
                         let indexEnemy = this.level.enemies.indexOf(enemy);
                         let indexBottle = this.throwableObjects.indexOf(bottle);
                         bottle.colliding = true;
+                        bottle.y = this.throwableObjects[indexBottle].y;
                         if (this.collidingWithEndboss(indexEnemy)) {
                             this.level.enemies[indexEnemy].endbossHurt.play();
                             setTimeout(() => {

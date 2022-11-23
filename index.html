@@ -40,67 +40,66 @@
     <h1>El Pollo Loco</h1>
 
     <div id="startscreen" class="startscreen">
-
-        <div class="overlay">
-            <img id="startscreen-img" class="startscreen-img no-grayscale"
-                src="img/9_intro_outro_screens/start/startscreen_1.png">
+        <div id="overlay-game-over-or-win">
+            <div id="text-game-over-or-win">Overlay Text</div>
         </div>
 
-        <div onclick="init()" class="start-game bg-styling p-absolute-middle">Start Game</div>
+        <!-- Playscreen -->
+        <canvas class="d-none" id="canvas" width="720px" height="480px">
 
-        <div class="settings bg-styling">
-            <img src="img/9_intro_outro_screens/start/gears-solid.svg" alt="settings">
-        </div>
+        </canvas>
 
-        <div id="fullscreen" onclick="showFullScreen()" class="full-screen bg-styling p-absolute-middle">
-            <img src="img/9_intro_outro_screens/start/expand-solid.svg" alt="full-screen">
-        </div>
+        <div id="test" class="test-div">
 
-        <div onclick="showControls()" class="controls bg-styling">
-            <img src="img/9_intro_outro_screens/start/gamepad-solid.svg" alt="controls">
-        </div>
+            <div class="overlay">
+                <img id="startscreen-img" class="startscreen-img no-grayscale"
+                    src="img/9_intro_outro_screens/start/startscreen_1.png">
+            </div>
 
-        <!-- shows you with which keys you play the game -->
-        <div id="controls" class="controls-div hidden">
-            <table>
-                <tr>
-                    <td>Move Right</td>
-                    <td class="keys"> <img class="controls-img"
-                            src="img/9_intro_outro_screens/start/right-long-solid.svg" alt="arrow-right"> </td>
-                </tr>
-                <tr>
-                    <td>Move Left</td>
-                    <td class="keys"> <img class="controls-img"
-                            src="img/9_intro_outro_screens/start/left-long-solid.svg" alt="arrow-left"> </td>
-                </tr>
-                <tr>
-                    <td>Jump</td>
-                    <td class="keys"> <img class="controls-img" src="img/9_intro_outro_screens/start/space.png"
-                            alt="space"> </td>
-                </tr>
-                <tr>
-                    <td>Throw Bottle</td>
-                    <td class="keys controls-d"> D </td>
-                </tr>
-            </table>
-            <div onclick="closeControls()" class="close-div">
-                <img src="img/9_intro_outro_screens/start/close.svg" alt="close">
+            <div onclick="init()" class="start-game bg-styling p-absolute-middle">Start Game</div>
+
+            <div id="fullscreen" onclick="showFullScreen()" class="full-screen bg-styling">
+                <img src="img/9_intro_outro_screens/start/expand-solid.svg" alt="full-screen">
+            </div>
+
+            <div onclick="showControls()" class="controls bg-styling">
+                <img src="img/9_intro_outro_screens/start/gamepad-solid.svg" alt="controls">
+            </div>
+
+            <!-- shows you with which keys you play the game -->
+            <div id="controls" class="controls-div hidden">
+                <table>
+                    <tr>
+                        <td>Move Right</td>
+                        <td class="keys"> <img class="controls-img"
+                                src="img/9_intro_outro_screens/start/right-long-solid.svg" alt="arrow-right"> </td>
+                    </tr>
+                    <tr>
+                        <td>Move Left</td>
+                        <td class="keys"> <img class="controls-img"
+                                src="img/9_intro_outro_screens/start/left-long-solid.svg" alt="arrow-left"> </td>
+                    </tr>
+                    <tr>
+                        <td>Jump</td>
+                        <td class="keys"> <img class="controls-img" src="img/9_intro_outro_screens/start/space.png"
+                                alt="space"> </td>
+                    </tr>
+                    <tr>
+                        <td>Throw Bottle</td>
+                        <td class="keys controls-d"> D </td>
+                    </tr>
+                </table>
+                <div onclick="closeControls()" class="close-div">
+                    <img src="img/9_intro_outro_screens/start/close.svg" alt="close">
+                </div>
             </div>
         </div>
+
     </div>
 
 
-    <div id="overlay-game-over-or-win">
-        <div id="text-game-over-or-win">Overlay Text</div>
-    </div>
 
-    <!-- Playscreen -->
-    <div id="game-over-or-win" class="game-over-or-win-text d-none"></div>
-    <canvas class="d-none" id="canvas" width="720px" height="480px">
 
-    </canvas>
-
-    <button onclick="showGameOverOrWin()">press me</button>
     <!-- name from the designer of the background image, bottom left right -->
     <a class="img-from"
         href="https://www.freepik.com/free-vector/mexican-cactus-with-mustaches-sombrero-poncho-desert-landscape-viva-mexico-cinco-de-mayo-party-traditional-latin-holiday-fiesta-celebration-symbol-cartoon-vector-illustration_21219711.htm#page=2&query=desert%20cartoon&position=0&from_view=search&track=sph">Image

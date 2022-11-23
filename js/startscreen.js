@@ -20,10 +20,14 @@ function showFullScreen() {
     let startscreen = document.getElementById('startscreen');
     if (startscreen.requestFullscreen) {
         startscreen.requestFullscreen();
+        document.getElementById('overlay-game-over-or-win').style = ' width: 100%; height: 100%;';
+        document.getElementById('canvas').style = ' width: 100%; height: 100%;';
     }
 
     else if (startscreen.webkitRequestFullScreen) {
         startscreen.webkitRequestFullScreen();
+        document.getElementById('overlay-game-over-or-win').style = ' width: 100%; height: 100%;';
+        document.getElementById('canvas').style = ' width: 100%; height: 100%;';
     }
     document.getElementById('fullscreen').onclick = function () { closeFullScreen() };
 }
@@ -32,10 +36,14 @@ function showFullScreen() {
 function closeFullScreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
+        document.getElementById('overlay-game-over-or-win').style = ' width: 720px; height: 480px;';
+        document.getElementById('canvas').style = ' width: 720px; height: 480px;';
     }
 
     else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+        document.getElementById('overlay-game-over-or-win').style = ' width: 720px; height: 480px;';
+        document.getElementById('canvas').style = ' width: 720px; height: 480px;';
     }
     document.getElementById('fullscreen').onclick = function () { showFullScreen() };
 }
@@ -45,11 +53,6 @@ function closeFullScreen() {
 function showGameOverOrWin(text) {
     document.getElementById('text-game-over-or-win').innerHTML = text;
     document.getElementById("overlay-game-over-or-win").style.display = "block";
-    location.reload();
 }
 
 
-
-// function off() {
-//     document.getElementById("overlay").style.display = "none";
-// }
