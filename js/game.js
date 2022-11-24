@@ -13,7 +13,7 @@ function init() {
         world = new World(canvas, keyboard);
     }, 100);
     document.getElementById('canvas').classList.remove('d-none');
-    document.getElementById('test').classList.add('d-none');
+    document.getElementById('startscreen-without-canvas').classList.add('d-none');
 }
 
 
