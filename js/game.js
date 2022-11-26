@@ -9,6 +9,7 @@ function init() {
     canvas = document.getElementById('canvas');
     checkOrientation();
     initLevel();
+    document.getElementById('controls-responsive').classList.remove('d-none');
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);

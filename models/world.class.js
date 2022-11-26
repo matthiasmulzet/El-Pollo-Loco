@@ -148,7 +148,7 @@ class World {
     characterEliminateNearbyEnemies() {
         this.level.enemies.forEach((enemy) => {
             let xDifference = this.character.x - enemy.x;
-            if (xDifference < 80 && xDifference > -105) {
+            if (xDifference < 75 && xDifference > -100) {
                 this.character.speedY = 0;
                 let index = this.level.enemies.indexOf(enemy);
                 this.collidingSmallOrNormalChicken(index);

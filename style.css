@@ -169,6 +169,14 @@ h1 {
     width: 30px;
 }
 
+.controls-arrow-up {
+    display: none;
+}
+
+.controls-bottle {
+    display: none;
+}
+
 .close-div {
     display: flex;
     justify-content: center;
@@ -451,27 +459,67 @@ h1 {
 }
 
 
+@media (max-width: 1368px) {
+    .controls-space-up {
+        display: none;
+    }
+
+    .controls-d {
+        display: none;
+    }
+
+    .controls-arrow-up {
+        display: unset;
+    }
+
+    .controls-bottle {
+        display: unset;
+    }
+}
+
+
 @media (max-width: 768px) {
     .controls-responsive {
         display: flex;
+    }
+
+    .img-from {
+        display: none;
     }
 }
 
 
 /* 
-    ##Device = Tablets, Ipads (landscape)
-    ##Screen = B/w 768px to 1024px
-  */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {}
-
-/* 
-    ##Device = Low Resolution Tablets, Mobiles (Landscape)
-    ##Screen = B/w 481px to 767px
-  */
-@media (min-width: 481px) and (max-width: 767px) {}
-
-/* 
     ##Device = Most of the Smartphones Mobiles (Portrait)
     ##Screen = B/w 320px to 479px
   */
-@media (min-width: 320px) and (max-width: 480px) {}
+@media (min-width: 320px) and (max-width: 480px) {
+    .controls-left-side img, .controls-right-side img {
+        width: 20px;
+        height: 25px;
+    }
+
+    .controls-responsive {
+        bottom: 2px;
+    }
+
+    .controls-left-side {
+        margin-left: 5px;
+    }
+
+    .controls-right-side {
+        margin-right: 5px;
+    }
+
+    .arrow-right {
+        margin-left: 10px;
+    }
+
+    .arrow-up {
+        margin-right: 10px;
+    }
+
+    .bottle {
+        width: 28px !important;
+    }
+}

@@ -51,7 +51,8 @@
 
         </canvas>
 
-        <div class="controls-responsive">
+        <!--Responsive Control to move character and throw bottles-->
+        <div id="controls-responsive" class="controls-responsive d-none">
             <div class="controls-left-side">
                 <img src="img/10_controls_responsive/arrow-left-solid.svg" alt="arrow-left">
                 <img class="arrow-right" src="img/10_controls_responsive/arrow-right-solid.svg" alt="arrow-right">
@@ -96,12 +97,17 @@
                     </tr>
                     <tr>
                         <td>Jump</td>
-                        <td class="keys"> <img class="controls-img" src="img/9_intro_outro_screens/start/space.png"
-                                alt="space"> </td>
+                        <td class="keys"> <img class="controls-img controls-space-up"
+                                src="img/9_intro_outro_screens/start/space.png" alt="space">
+                            <img class="controls-img controls-arrow-up"
+                                src="img/10_controls_responsive/arrow-up-solid.svg" alt="arrow-up">
+                        </td>
                     </tr>
                     <tr>
                         <td>Throw Bottle</td>
-                        <td class="keys controls-d"> D </td>
+                        <td class="keys controls-d"> D</td>
+                        <td class="keys"> <img class="controls-img controls-bottle"
+                                src="img/10_controls_responsive/wine-bottle-solid.svg" alt="bottle"> </td>
                     </tr>
                 </table>
                 <div onclick="closeControls()" class="close-div">
