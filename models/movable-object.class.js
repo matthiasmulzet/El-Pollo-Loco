@@ -7,7 +7,12 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     durationPlaySound = 0;
 
-
+    /**
+     * some images of objects have a space all around them, when we check for collision 
+     * that space is also taken into account and the character will collide with the other 
+     * elements before they even touched the actual body. Offset deletes the space arround
+     * the objects
+     */
     offset = {
         top: 0,
         left: 0,
@@ -16,14 +21,15 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * when character is in air, function is there to get them back on ground
+     */
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+            if (this.isInAir()) {
                 this.reduceY();
-                // if(this instanceof ThrowableObject) {
-
-                // }
                 if (this instanceof Character && this.y > 135) {
+                    //character should never get lower than 135 on the y axis
                     this.y = 135;
                 }
             }
@@ -31,10 +37,10 @@ class MovableObject extends DrawableObject {
     }
 
 
-    reduceY() {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
+    isInAir() {
+        return this.isAboveGround() || this.speedY > 0
     }
+
 
 
     isAboveGround() {
@@ -46,6 +52,19 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * makes character fall
+     */
+    reduceY() {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+    }
+
+
+    /**
+     * iterates through the images array
+     * @param {array of images} images 
+     */
     playAnimation(images) {
         let i = this.currentImage % (images.length);
         let path = images[i];
