@@ -1,0 +1,273 @@
+@media only screen and (max-width: 720px) {
+    #text-game-over-or-win {
+        font-size: 55px;
+    }
+
+    canvas {
+        width: 100%;
+    }
+
+    .startscreen {
+        width: 100%;
+        height: auto;
+    }
+
+    .startscreen-without-canvas {
+        height: 100%;
+    }
+
+    .overlay {
+        height: 100%;
+    }
+
+    #overlay-game-over-or-win {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+@media only screen and (max-height: 480px) {
+    h1 {
+        display: none;
+    }
+
+    canvas {
+        height: 100vh;
+        width: 100%;
+    }
+
+    .startscreen {
+        height: 100vh;
+    }
+
+    .startscreen-without-canvas {
+        height: 100vh;
+    }
+
+    .overlay {
+        height: 100vh;
+    }
+
+    #overlay-game-over-or-win {
+        height: 100vh;
+    }
+}
+
+
+/* Ipads and littlere devices controls */
+.controls-responsive {
+    position: absolute;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    bottom: 10px;
+    z-index: 10;
+}
+
+.controls-left-side {
+    margin-left: 20px;
+}
+
+.controls-right-side {
+    margin-right: 20px;
+}
+
+.controls-left-side img, .controls-right-side img {
+    width: 30px;
+    height: 35px;
+    padding: 3px 10px;
+    background-color: rgb(255, 200, 0);
+    border-radius: 100%;
+}
+
+.arrow-right {
+    margin-left: 40px;
+}
+
+.arrow-up {
+    margin-right: 40px;
+}
+
+.bottle {
+    width: 38px !important;
+}
+
+.bg-yellow {
+    background-color: rgb(243, 224, 16) !important;
+}
+
+/* Ipads and littlere devices controls */
+
+
+/* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1368px) {
+    .controls-responsive {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 1368px) {
+    .controls-space-up {
+        display: none;
+    }
+
+    .controls-d {
+        display: none;
+    }
+
+    .controls-arrow-up {
+        display: unset;
+    }
+
+    .controls-bottle {
+        display: unset;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .controls-responsive {
+        display: flex;
+    }
+
+    .img-from {
+        display: none;
+    }
+}
+
+
+@media (max-width: 570px) {
+    #text-game-over-or-win {
+        font-size: 39px;
+    }
+
+    .start-game {
+        top: 15px;
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .full-screen, .controls {
+        bottom: 10px;
+        padding: 2px 18px;
+    }
+
+    .full-screen img, .controls img {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+
+@media (max-width: 470px) {
+    .controls-div table {
+        width: 230px;
+    }
+
+    .controls-div table td {
+        padding: 2px;
+        font-size: 16px;
+    }
+
+    .controls-img {
+        height: 26px;
+        width: 26px;
+    }
+}
+
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 40px;
+    }
+
+    #text-game-over-or-win {
+        font-size: 29px;
+    }
+
+    .start-game {
+        top: 6px;
+    }
+
+    .full-screen, .controls {
+        bottom: 8px;
+        padding: 2px 15px;
+    }
+
+    .full-screen img, .controls img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .controls {
+        right: 10px;
+    }
+
+    .full-screen {
+        left: 10px;
+    }
+
+    .controls-div table {
+        width: 210px;
+    }
+
+    .controls-img {
+        height: 24px;
+        width: 24px;
+    }
+
+    .close-div {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-width: 350px) {
+    .close-div {
+        margin-bottom: 3px;
+    }
+}
+
+
+/* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+@media (min-width: 320px) and (max-width: 480px) {
+    .controls-left-side img, .controls-right-side img {
+        width: 20px;
+        height: 25px;
+    }
+
+    .controls-responsive {
+        bottom: 2px;
+    }
+
+    .controls-left-side {
+        margin-left: 5px;
+    }
+
+    .controls-right-side {
+        margin-right: 5px;
+    }
+
+    .arrow-right {
+        margin-left: 10px;
+    }
+
+    .arrow-up {
+        margin-right: 10px;
+    }
+
+    .bottle {
+        width: 28px !important;
+    }
+}

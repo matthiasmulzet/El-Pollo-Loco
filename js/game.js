@@ -2,14 +2,14 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 level = level1;
-let intervalIds = [];
 
 
 function init() {
     canvas = document.getElementById('canvas');
     checkOrientation();
-    initLevel();
+    initLevel(); //creates all Elements in the game, except character
     document.getElementById('controls-responsive').classList.remove('d-none');
+    //buttons to go, jump and throw with character will be shown
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);
@@ -34,6 +34,9 @@ function checkOrientation() {
 }
 
 
+/**
+ * at the end of the game all intervals will be cleared
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) {
         window.clearInterval(i);
@@ -41,56 +44,96 @@ function clearAllIntervals() {
 }
 
 
+function responsivePressEvents() {
+    responsiveGoLeft();
+    responsiveGoRight();
+    responsiveJumpUp();
+    responsiveThrowBottle();
+}
+
+
+function responsiveGoLeft() {
+    document.getElementById('go-left').addEventListener('touchstart', () => {
+        keyboard.LEFT = true;
+        document.getElementById('go-left').classList.add('bg-yellow');
+    });
+
+    document.getElementById('go-left').addEventListener('touchend', () => {
+        keyboard.LEFT = false;
+        document.getElementById('go-left').classList.remove('bg-yellow');
+    });
+}
+
+
+function responsiveGoRight() {
+    document.getElementById('go-right').addEventListener('touchstart', () => {
+        keyboard.RIGHT = true;
+        document.getElementById('go-right').classList.add('bg-yellow');
+    });
+
+    document.getElementById('go-right').addEventListener('touchend', () => {
+        keyboard.RIGHT = false;
+        document.getElementById('go-right').classList.remove('bg-yellow');
+    });
+}
+
+
+function responsiveJumpUp() {
+    document.getElementById('jump-up').addEventListener('touchstart', () => {
+        keyboard.SPACE = true;
+        document.getElementById('jump-up').classList.add('bg-yellow');
+    });
+
+    document.getElementById('jump-up').addEventListener('touchend', () => {
+        keyboard.SPACE = false;
+        document.getElementById('jump-up').classList.remove('bg-yellow');
+    });
+}
+
+
+function responsiveThrowBottle() {
+    document.getElementById('throw-bottle').addEventListener('touchstart', () => {
+        keyboard.D = true;
+        document.getElementById('throw-bottle').classList.add('bg-yellow');
+    });
+
+    document.getElementById('throw-bottle').addEventListener('touchend', () => {
+        keyboard.D = false;
+        document.getElementById('throw-bottle').classList.remove('bg-yellow');
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", responsivePressEvents);
+
 
 window.addEventListener('keydown', (e) => {
-    if (e.keyCode == 38) {
+    if (e.keyCode == 38)
         keyboard.UP = true;
-    }
-
-    if (e.keyCode == 39) {
+    if (e.keyCode == 39)
         keyboard.RIGHT = true;
-    }
-
-    if (e.keyCode == 37) {
+    if (e.keyCode == 37)
         keyboard.LEFT = true;
-    }
-
-    if (e.keyCode == 40) {
+    if (e.keyCode == 40)
         keyboard.DOWN = true;
-    }
-
-    if (e.keyCode == 32) {
+    if (e.keyCode == 32)
         keyboard.SPACE = true;
-    }
-
-    if (e.keyCode == 68) {
+    if (e.keyCode == 68)
         keyboard.D = true;
-    }
 });
 
 
 window.addEventListener('keyup', (e) => {
-    if (e.keyCode == 38) {
+    if (e.keyCode == 38)
         keyboard.UP = false;
-    }
-
-    if (e.keyCode == 39) {
+    if (e.keyCode == 39)
         keyboard.RIGHT = false;
-    }
-
-    if (e.keyCode == 37) {
+    if (e.keyCode == 37)
         keyboard.LEFT = false;
-    }
-
-    if (e.keyCode == 40) {
+    if (e.keyCode == 40)
         keyboard.DOWN = false;
-    }
-
-    if (e.keyCode == 32) {
+    if (e.keyCode == 32)
         keyboard.SPACE = false;
-    }
-
-    if (e.keyCode == 68) {
+    if (e.keyCode == 68)
         keyboard.D = false;
-    }
 });
