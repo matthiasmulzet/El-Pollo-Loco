@@ -305,9 +305,6 @@ h1 {
     }
 }
 
-/* Smartphones --------------------- */
-
-
 @media (max-width: 570px) {
     #text-game-over-or-win {
         font-size: 39px;
@@ -394,6 +391,51 @@ h1 {
     }
 }
 
+/* Smartphones --------------------- */
+
+
+
+/* Ipads and littlere devices controls */
+.controls-responsive {
+    position: absolute;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    bottom: 10px;
+    z-index: 10;
+}
+
+.controls-left-side {
+    margin-left: 20px;
+}
+
+.controls-right-side {
+    margin-right: 20px;
+}
+
+.controls-left-side img, .controls-right-side img {
+    width: 30px;
+    height: 35px;
+    padding: 3px 10px;
+    background-color: rgb(255, 200, 0);
+    border-radius: 100%;
+}
+
+.arrow-right {
+    margin-left: 40px;
+}
+
+.arrow-up {
+    margin-right: 40px;
+}
+
+.bottle {
+    width: 38px !important;
+}
+
+/* Ipads and littlere devices controls */
 
 
 
@@ -402,7 +444,19 @@ h1 {
     ##Device = Tablets, Ipads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-@media (min-width: 768px) and (max-width: 1024px) {}
+@media (min-width: 768px) and (max-width: 1368px) {
+    .controls-responsive {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .controls-responsive {
+        display: flex;
+    }
+}
+
 
 /* 
     ##Device = Tablets, Ipads (landscape)
