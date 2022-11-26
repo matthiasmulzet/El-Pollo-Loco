@@ -1,5 +1,6 @@
-
-
+/**
+ * when you click on the Gameboy icon, this function shows the control to move the character and throw bottles
+ */
 function showControls() {
     document.getElementById('controls').classList.add('visible');
     document.getElementById('controls').classList.remove('hidden');
@@ -8,6 +9,10 @@ function showControls() {
 }
 
 
+
+/**
+ * this function close the control overview for moving the character
+ */
 function closeControls() {
     document.getElementById('controls').classList.add('hidden');
     document.getElementById('controls').classList.remove('visible');
@@ -16,6 +21,10 @@ function closeControls() {
 }
 
 
+
+/**
+ * canvas and the startscreen container are now fullscreen
+ */
 function showFullScreen() {
     let startscreen = document.getElementById('startscreen');
     if (startscreen.requestFullscreen) {
@@ -36,20 +45,20 @@ function showFullScreen() {
 function closeFullScreen() {
     if (document.exitFullscreen) {
         document.exitFullscreen();
-        document.getElementById('overlay-game-over-or-win').style = ' width: 720px; height: 480px;';
-        document.getElementById('canvas').style = ' width: 720px; height: 480px;';
     }
 
     else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
-        document.getElementById('overlay-game-over-or-win').style = ' width: 720px; height: 480px;';
-        document.getElementById('canvas').style = ' width: 720px; height: 480px;';
     }
     document.getElementById('fullscreen').onclick = function () { showFullScreen() };
 }
 
 
-
+/**
+ * when you lose a overlay with the text "game over" will appear
+ * when you win a overlay with the text "win" will appear
+ * @param {win or game over} text 
+ */
 function showGameOverOrWin(text) {
     document.getElementById('text-game-over-or-win').innerHTML = text;
     document.getElementById("overlay-game-over-or-win").style.display = "block";

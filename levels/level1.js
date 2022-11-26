@@ -2,6 +2,7 @@ let allCoins = [];
 let allBottles = [];
 let level1;
 
+
 //create 30 coins and push them in Array
 for (let i = 0; i < 30; i++) {
     let coin = new Coin();
@@ -21,6 +22,7 @@ for (let i = 15; i < 30; i++) {
     let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png');
     allBottles.push(bottle);
 }
+
 
 //all Objects from the Game except Character
 function initLevel() {

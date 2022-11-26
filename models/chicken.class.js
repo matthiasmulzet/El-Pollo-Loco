@@ -21,11 +21,17 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+    * Chickens will randomly placed in map
+    */
     placeChicken() {
         this.x = 500 + Math.random() * 7500;
     }
 
 
+    /**
+     * every chicken gets a random speed
+    */
     setSpeed() {
         this.speed = 0.25 + Math.random() * 0.50;
     }

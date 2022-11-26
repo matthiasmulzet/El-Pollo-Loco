@@ -3,6 +3,31 @@ class Character extends MovableObject {
     y = 135;
     speed = 6;
 
+
+    IMAGES_SLEEPING = [
+        'img/2_character_pepe/1_idle/idle/I-1.png',
+        'img/2_character_pepe/1_idle/idle/I-2.png',
+        'img/2_character_pepe/1_idle/idle/I-3.png',
+        'img/2_character_pepe/1_idle/idle/I-4.png',
+        'img/2_character_pepe/1_idle/idle/I-5.png',
+        'img/2_character_pepe/1_idle/idle/I-6.png',
+        'img/2_character_pepe/1_idle/idle/I-7.png',
+        'img/2_character_pepe/1_idle/idle/I-8.png',
+        'img/2_character_pepe/1_idle/idle/I-9.png',
+        'img/2_character_pepe/1_idle/idle/I-10.png',
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png'
+
+    ]
+
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -49,6 +74,13 @@ class Character extends MovableObject {
     collisionBottle = new Audio('../audio/collect-bottle.mp3');
     gameOver = new Audio('../audio/game-over.mp3');
 
+
+    /**
+     * the image of the character has a space all around it, when we check for collision 
+     * that space is also taken into account and the character will collide with the other 
+     * elements before they even touched the actual body. Offset reduces the distance to 
+     * the characters actual body
+     */
     offset = {
         top: 120,
         left: 40,
@@ -67,6 +99,7 @@ class Character extends MovableObject {
 
     loadAllImages() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+        this.loadImages(this.IMAGES_SLEEPING);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
@@ -79,7 +112,7 @@ class Character extends MovableObject {
             this.walking_sound.pause();
             this.moveLeftOrRight();
             this.jumpOrNoJump();
-            this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 100; //game environment moves with the character
         }, 1000 / 60);
 
         setInterval(() => {
@@ -91,35 +124,53 @@ class Character extends MovableObject {
 
     animateCharacterImages() {
         if (this.isDead()) {
-            this.playAnimation(this.IMAGES_DEAD);
-            clearAllIntervals();
-            this.gameOver.play();
-            this.walking_sound.pause();
-            setTimeout(() => {
-                setInterval(() => {
-                    this.y += 10;
-                }, 100);
-                showGameOverOrWin('GAME OVER');
-            }, 2000);
-            setTimeout(() => {
-                setTimeout(() => {
-                    document.location.reload();
-                }, 3000);
-            }, 5000);
+            this.gameOverAnimation();
         } else if (this.isHurt(0.5)) {
             this.animateHurt();
         } else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
         } else {
-            this.animateWalking();
+            this.animateWalkingOrSleeping();
         }
     }
 
 
-    animateWalking() {
-        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+    gameOverAnimation() {
+        this.playAnimation(this.IMAGES_DEAD);
+        clearAllIntervals();
+        this.gameOver.play();
+        this.walking_sound.pause();
+        this.letCharacterDisappearAndShowGameOver();
+        this.redirectToStartpage();
+    }
+
+
+    letCharacterDisappearAndShowGameOver() {
+        setTimeout(() => {
+            setInterval(() => {
+                this.y += 10;
+            }, 100);
+            showGameOverOrWin('GAME OVER');
+        }, 2000);
+    }
+
+
+    redirectToStartpage() {
+        setTimeout(() => {
+            setTimeout(() => {
+                document.location.reload();
+            }, 3000);
+        }, 5000);
+    }
+
+
+    animateWalkingOrSleeping() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.playAnimation(this.IMAGES_WALKING); // Walk Animation
+            this.playAnimation(this.IMAGES_WALKING);
+        }
+
+        else {
+            this.playAnimation(this.IMAGES_SLEEPING);
         }
     }
 
@@ -132,6 +183,9 @@ class Character extends MovableObject {
     }
 
 
+    /**
+     * proofs if character should go left or right
+     */
     moveLeftOrRight() {
         if (this.shouldWalkToRight()) {
             this.walkRight();
@@ -151,7 +205,7 @@ class Character extends MovableObject {
     walkRight() {
         this.moveRight();
         this.otherDirection = false;
-        if (!this.isAboveGround()) {
+        if (!this.isAboveGround()) {//when character is not in air
             this.walking_sound.play();
         }
     }
@@ -169,6 +223,7 @@ class Character extends MovableObject {
             this.walking_sound.play();
         }
     }
+
 
 
     jumpOrNoJump() {
@@ -190,8 +245,7 @@ class Character extends MovableObject {
 
 
     noJump() {
-        return !this.world.keyboard.SPACE && !this.isAboveGround() || //&& this.world.keyboard.RIGHT 
-            !this.world.keyboard.SPACE && !this.isAboveGround() //&& this.world.keyboard.LEFT
+        return !this.world.keyboard.SPACE && !this.isAboveGround()
     }
 
 

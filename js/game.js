@@ -44,6 +44,9 @@ function clearAllIntervals() {
 }
 
 
+/**
+ * function for the responsive buttons to move the character
+ */
 function responsivePressEvents() {
     responsiveGoLeft();
     responsiveGoRight();
@@ -52,6 +55,10 @@ function responsivePressEvents() {
 }
 
 
+/**
+ * when you click on the left arrow, the background from the arrow truns yellow and
+ * character moves to left, if you move your finger from the arrow, character stops
+ */
 function responsiveGoLeft() {
     document.getElementById('go-left').addEventListener('touchstart', () => {
         keyboard.LEFT = true;
@@ -104,9 +111,16 @@ function responsiveThrowBottle() {
 }
 
 
+/**
+ * when the Content in the DOM is loaded, the responsive arrows and bottle are ready for touch
+ */
 document.addEventListener("DOMContentLoaded", responsivePressEvents);
 
 
+
+/**
+ * keyCodes to move the character with the keyboard
+ */
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 38)
         keyboard.UP = true;
@@ -123,6 +137,9 @@ window.addEventListener('keydown', (e) => {
 });
 
 
+/**
+ * when you go up with your finger from the button on the keyboard, character stops his move
+ */
 window.addEventListener('keyup', (e) => {
     if (e.keyCode == 38)
         keyboard.UP = false;

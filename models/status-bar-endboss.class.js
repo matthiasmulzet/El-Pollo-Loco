@@ -17,6 +17,10 @@ class StatusbarEndboss extends DrawableObject {
         this.setPercentage(100);
     }
 
+
+    /**
+     * position of the Statusbar
+     */
     setCharacteristics() {
         this.x = 500;
         this.y = 0;
