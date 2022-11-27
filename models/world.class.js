@@ -72,22 +72,27 @@ class World {
             if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy); //checks the index of the enemy with which
                 //the character is colliding
-                let chickenIsJumpedOn = this.level.enemies[index];
-                if (this.characterJumpsOnSmallChicken(chickenIsJumpedOn)) {
-                    this.animateDeadOfSmallChicken(index);
-                } else if (this.characterJumpsOnNormalChicken(chickenIsJumpedOn)) {
-                    this.animateDeadOfChicken(index);
-                } else {
-                    this.character.hit();
-                    this.statusbarHealth.setPercentage(this.character.energy);
-                }
+                this.killsEnemyOrGetsHurt(index);
             }
         });
     }
 
 
+    killsEnemyOrGetsHurt(index) {
+        let chickenIsJumpedOn = this.level.enemies[index];
+        if (this.characterJumpsOnSmallChicken(chickenIsJumpedOn))
+            this.animateDeadOfSmallChicken(index);
+        else if (this.characterJumpsOnNormalChicken(chickenIsJumpedOn))
+            this.animateDeadOfChicken(index);
+        else {
+            this.character.hit();
+            this.statusbarHealth.setPercentage(this.character.energy);
+        }
+    }
+
+
     /**
-     * @param {*enemy with which the character is colliding} chickenIsJumpedOn
+     * @param {*object, enemy with which the character is colliding} chickenIsJumpedOn
      * @returns parametes that must be met
      */
     characterJumpsOnSmallChicken(chickenIsJumpedOn) {
@@ -104,7 +109,7 @@ class World {
 
     /**
      * animates the dead of the small chicken
-     * @param {*index of the enemy with which the character is colliding} index 
+     * @param {*number, index of the enemy with which the character is colliding} index 
      */
     animateDeadOfSmallChicken(index) {
         this.character.speedY = 0;
@@ -138,7 +143,7 @@ class World {
 
 
     /**
-     * @param {enemy of the level.enemies array} enemy 
+     * @param {*obejct, enemy from the level.enemies array} enemy 
      * @returns the value that checks if enemies are in the immediate vicinity
      */
     chickenIsNearby(enemy) {
@@ -149,7 +154,7 @@ class World {
 
     /**
      * checks if small or normal chicken gets killed
-     * @param {index of the chicken who gets killed} indexEnemy 
+     * @param {*number, index of the chicken who gets killed} indexEnemy 
      */
     collidingSmallOrNormalChicken(indexEnemy) {
         let chickenWhoGetsKilled = this.level.enemies[indexEnemy];
@@ -162,7 +167,7 @@ class World {
 
 
     /**
-     * @param {index of the small chicken who gets killed} index 
+     * @param {*number, index of the small chicken who gets killed} index 
     */
     showDeadSmallChicken(index) {
         let smallChickenWhoGetsKilled = this.level.enemies[index];
@@ -174,7 +179,7 @@ class World {
 
 
     /**
-     * @param {index of the chicken who gets killed} index 
+     * @param {*number, index of the chicken who gets killed} index 
      */
     showDeadChicken(index) {
         let chickenWhoGetsKilled = this.level.enemies[index];
@@ -182,6 +187,145 @@ class World {
         //generates img of a dead chicken on the position where you jumped on
         this.deadEnemies.push(this.deadChicken);
         this.level.enemies.splice(index, 1);
+    }
+
+
+    checkCollectCoins() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isCollidingCoin(coin)) {
+                this.character.collisionCoin.play();
+                this.removeCoin(coin);
+                this.scoreCoins += 1;
+            }
+        })
+    }
+
+
+    checkCollectBottles() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isCollidingBottle(bottle)) {
+                this.character.collisionBottle.play();
+                this.removeBottle(bottle);
+                this.scoreBottles += 1;
+            }
+        })
+    }
+
+
+    /**
+     * if you want to throw a bottle, function generates the throwable Object
+     */
+    checkThrowObjects() {
+        if (this.wantThrowBottle()) {
+            let bottle;
+            this.isInAir = true;
+            if (this.character.otherDirection == true) {
+                bottle = new ThrowableObject(this.character.x, this.character.y + 100);
+                bottle.otherDirection = true;
+            }
+            else
+                bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+            this.scoreBottles -= 1;
+            this.throwNextBottle();
+        }
+    }
+
+
+    wantThrowBottle() {
+        return this.keyboard.D && this.scoreBottles > 0 && !this.isInAir
+    }
+
+
+    /**
+     * after 0.5s the next bottle can be thrown
+     */
+    throwNextBottle() {
+        setTimeout(() => {
+            this.isInAir = false;
+        }, 500);
+    }
+
+
+    checkBottleHit() {
+        if (this.bottlesToThrow()) {
+            let actualBottle = this.throwableObjects.length - 1;
+            this.level.enemies.forEach((enemy) => {
+                this.throwableObjects.forEach((bottle) => {
+                    if (bottle.isColliding(enemy)) {
+                        bottle.bottleBreak.play();
+                        let indexEnemy = this.level.enemies.indexOf(enemy);
+                        let indexBottle = this.throwableObjects.indexOf(bottle);
+                        bottle.colliding = true; //animates bottle break in throwable-object.class.js file
+                        bottle.y = this.throwableObjects[indexBottle].y;
+                        if (this.collidingWithEndboss(indexEnemy))
+                            this.endbossGetsHurt(indexEnemy, indexBottle);
+                        else
+                            this.chickenGetsKilled(indexEnemy, indexBottle, actualBottle);
+                    }
+                })
+            })
+        }
+    }
+
+
+    bottlesToThrow() {
+        return this.throwableObjects.length > 0
+    }
+
+
+    /**
+     * @param {number} indexEnemy index of enemy from level.enemies array
+     * @returns indexEnemy == index of endboss
+     */
+    collidingWithEndboss(indexEnemy) {
+        let endbossIndex = this.level.enemies.length - 1;
+        return indexEnemy == endbossIndex
+    }
+
+
+    /**
+     * @param {number} indexEnemy last index (is always the endboss) of the level.enemies array
+     * @param {number} indexBottle index of the bottle which is colliding with endboss
+     */
+    endbossGetsHurt(indexEnemy, indexBottle) {
+        let endboss = this.level.enemies[indexEnemy];
+        endboss.endbossHurt.play();
+        setTimeout(() => {
+            this.throwableObjects.splice(indexBottle, 1);
+        }, 400);
+        endboss.hit();
+        this.statusbarEndboss.setPercentage(endboss.energy);
+    }
+
+
+    /**
+     * @param {number} indexEnemy index of enemy from level.enemies array who gets killed
+     * @param {number} indexBottle index of the bottle who kills the enemy
+     * @param {number} actualBottle
+     */
+    chickenGetsKilled(indexEnemy, indexBottle, actualBottle) {
+        this.level.enemies[indexEnemy].deadChickenSound.play();
+        setTimeout(() => {
+            this.throwableObjects.splice(indexBottle, 1);
+        }, 400);
+        this.collidingSmallOrNormalChicken(indexEnemy);
+        this.bottleEliminateNearbyEnemies(actualBottle);
+    }
+
+
+    /**
+     * 
+     * @param {*} actualBottle 
+     */
+    bottleEliminateNearbyEnemies(actualBottle) {
+        this.level.enemies.forEach((enemy) => {
+            let xDifference = this.throwableObjects[actualBottle].x - enemy.x;
+            if (xDifference < 75 && xDifference > -95) {
+                let index = this.level.enemies.indexOf(enemy);
+                this.collidingSmallOrNormalChicken(index);
+            }
+        });
     }
 
 
@@ -206,117 +350,6 @@ class World {
     }
 
 
-    checkBottleHit() {
-        if (this.bottlesToThrow()) {
-            let actualBottle = this.throwableObjects.length - 1;
-            this.level.enemies.forEach((enemy) => {
-                this.throwableObjects.forEach((bottle) => {
-                    if (bottle.isColliding(enemy)) {
-                        bottle.bottleBreak.play();
-                        let indexEnemy = this.level.enemies.indexOf(enemy);
-                        let indexBottle = this.throwableObjects.indexOf(bottle);
-                        bottle.colliding = true;
-                        bottle.y = this.throwableObjects[indexBottle].y;
-                        if (this.collidingWithEndboss(indexEnemy)) {
-                            this.level.enemies[indexEnemy].endbossHurt.play();
-                            setTimeout(() => {
-                                this.throwableObjects.splice(indexBottle, 1);
-                            }, 400);
-                            this.level.enemies[indexEnemy].hit();
-                            this.statusbarEndboss.setPercentage(this.level.enemies[indexEnemy].energy);
-                        }
-                        else {
-                            this.level.enemies[indexEnemy].deadChickenSound.play();
-                            setTimeout(() => {
-                                this.throwableObjects.splice(indexBottle, 1);
-                            }, 400);
-                            this.collidingSmallOrNormalChicken(indexEnemy);
-                            this.bottleEliminateNearbyEnemies(actualBottle);
-                        }
-                    }
-                })
-            })
-        }
-    }
-
-
-    collidingWithEndboss(indexEnemy) {
-        return indexEnemy == (this.level.enemies.length - 1)
-    }
-
-
-    bottleEliminateNearbyEnemies(actualBottle) {
-        this.level.enemies.forEach((enemy) => {
-            let xDifference = this.throwableObjects[actualBottle].x - enemy.x;
-            if (xDifference < 75 && xDifference > -95) {
-                let index = this.level.enemies.indexOf(enemy);
-                this.collidingSmallOrNormalChicken(index);
-            }
-        });
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    bottlesToThrow() {
-        return this.throwableObjects.length > 0
-    }
-
-
-    checkThrowObjects() {
-        if (this.wantThrowBottle()) {
-            let bottle;
-            this.isInAir = true;
-            if (this.character.otherDirection == true) {
-                bottle = new ThrowableObject(this.character.x, this.character.y + 100);
-                bottle.otherDirection = true;
-            }
-
-            else {
-                bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            }
-            this.throwableObjects.push(bottle);
-            this.scoreBottles -= 1;
-            this.throwNextBottle();
-        }
-    }
-
-
-    throwNextBottle() {
-        setTimeout(() => {
-            this.isInAir = false;
-        }, 500);
-    }
-
-
-    wantThrowBottle() {
-        return this.keyboard.D && this.scoreBottles > 0 && !this.isInAir
-    }
-
-
-
-
-
-    checkCollectCoins() {
-        this.level.coins.forEach((coin) => {
-            if (this.character.isCollidingCoin(coin)) {
-                this.character.collisionCoin.play();
-                this.removeCoin(coin);
-                this.scoreCoins += 1;
-            }
-        })
-    }
-
 
     removeCoin(coin) {
         let index = this.level.coins.indexOf(coin);
@@ -324,15 +357,7 @@ class World {
     }
 
 
-    checkCollectBottles() {
-        this.level.bottles.forEach((bottle) => {
-            if (this.character.isCollidingBottle(bottle)) {
-                this.character.collisionBottle.play();
-                this.removeBottle(bottle);
-                this.scoreBottles += 1;
-            }
-        })
-    }
+
 
 
     removeBottle(bottle) {
