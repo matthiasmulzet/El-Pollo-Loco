@@ -6,17 +6,18 @@ class World {
     statusbarEndboss = new StatusbarEndboss();
     level = level1;
 
-    throwableObjects = [];
-    deadEnemies = [];
+    throwableObjects = []; //array where the bottles to throw are in
+    deadEnemies = []; //array where the enemies who gets killed will be pushed in
 
     isInAir = false;
 
     canvas;
     ctx;
     keyboard;
-    camera_x = 0;
-    scoreCoins = 0;
-    scoreBottles = 0;
+    camera_x = 0; //position of the camera screen
+    scoreCoins = 0; //counter which counts the collected coins
+    scoreBottles = 0; //counter which counts the collected bottles
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -36,6 +37,7 @@ class World {
         this.character.world = this;
     }
 
+
     /**
      * due to this function we get access to this file in the enboss.class.js file
      */
@@ -44,6 +46,10 @@ class World {
         endboss.world = this;
     }
 
+
+    /**
+     * runs the whole game
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -52,6 +58,132 @@ class World {
             this.checkEndboss();
         }, 1000 / 60);
     }
+
+
+    checkCollisions() {
+        this.checkCollision();
+        this.checkCollectCoins();
+        this.checkCollectBottles();
+    }
+
+
+    checkCollision() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                let index = this.level.enemies.indexOf(enemy); //checks the index of the enemy with which
+                //the character is colliding
+                let chickenIsJumpedOn = this.level.enemies[index];
+                if (this.characterJumpsOnSmallChicken(chickenIsJumpedOn)) {
+                    this.animateDeadOfSmallChicken(index);
+                } else if (this.characterJumpsOnNormalChicken(chickenIsJumpedOn)) {
+                    this.animateDeadOfChicken(index);
+                } else {
+                    this.character.hit();
+                    this.statusbarHealth.setPercentage(this.character.energy);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * @param {*enemy with which the character is colliding} chickenIsJumpedOn
+     * @returns parametes that must be met
+     */
+    characterJumpsOnSmallChicken(chickenIsJumpedOn) {
+        // character must be in air, character must be go to the ground and heigth of chicken he jumps on is the height of the small chicken
+        return this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && chickenIsJumpedOn.height == 50
+    }
+
+
+    characterJumpsOnNormalChicken(chickenIsJumpedOn) {
+        // character must be in air, character must be go to the ground and heigth of chicken he jumps on is the height of the normal chicken
+        return this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && chickenIsJumpedOn.height == 70
+    }
+
+
+    /**
+     * animates the dead of the small chicken
+     * @param {*index of the enemy with which the character is colliding} index 
+     */
+    animateDeadOfSmallChicken(index) {
+        this.character.speedY = 0;
+        this.level.enemies[index].deadChickenSound.play();
+        this.showDeadSmallChicken(index);
+        this.characterEliminateNearbyEnemies();
+    }
+
+
+    animateDeadOfChicken(index) {
+        this.character.speedY = 0;
+        this.level.enemies[index].deadChickenSound.play();
+        this.showDeadChicken(index);
+        this.characterEliminateNearbyEnemies();
+    }
+
+
+    /**
+     * when character is colliding with an enemy, function checks if other enemy are in close proximity to
+     * then they also will be killed
+     */
+    characterEliminateNearbyEnemies() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.chickenIsNearby(enemy)) {
+                this.character.speedY = 0;
+                let index = this.level.enemies.indexOf(enemy); //index of enemy who is nearby
+                this.collidingSmallOrNormalChicken(index);
+            }
+        });
+    }
+
+
+    /**
+     * @param {enemy of the level.enemies array} enemy 
+     * @returns the value that checks if enemies are in the immediate vicinity
+     */
+    chickenIsNearby(enemy) {
+        let xDifference = this.character.x - enemy.x;
+        return xDifference < 75 && xDifference > -100
+    }
+
+
+    /**
+     * checks if small or normal chicken gets killed
+     * @param {index of the chicken who gets killed} indexEnemy 
+     */
+    collidingSmallOrNormalChicken(indexEnemy) {
+        let chickenWhoGetsKilled = this.level.enemies[indexEnemy];
+        if (chickenWhoGetsKilled.height == 70) //height of a normal chicken
+            this.showDeadChicken(indexEnemy);
+        else if (chickenWhoGetsKilled.height == 50) //height of a small chicken
+            this.showDeadSmallChicken(indexEnemy);
+    }
+
+
+
+    /**
+     * @param {index of the small chicken who gets killed} index 
+    */
+    showDeadSmallChicken(index) {
+        let smallChickenWhoGetsKilled = this.level.enemies[index];
+        this.deadSmallChicken = new DeadSmallChicken(smallChickenWhoGetsKilled.x);
+        //generates img of a dead small chicken on the position where you jumped on
+        this.deadEnemies.push(this.deadSmallChicken);
+        this.level.enemies.splice(index, 1);
+    }
+
+
+    /**
+     * @param {index of the chicken who gets killed} index 
+     */
+    showDeadChicken(index) {
+        let chickenWhoGetsKilled = this.level.enemies[index];
+        this.deadChicken = new DeadChicken(chickenWhoGetsKilled.x);
+        //generates img of a dead chicken on the position where you jumped on
+        this.deadEnemies.push(this.deadChicken);
+        this.level.enemies.splice(index, 1);
+    }
+
 
 
     checkEndboss() {
@@ -124,51 +256,16 @@ class World {
     }
 
 
-    removeDeadSmallChicken(index) {
-        this.character.speedY = 0;
-        this.level.enemies[index].deadChickenSound.play();
-        this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[index].x);
-        this.deadEnemies.push(this.deadSmallChicken);
-        this.level.enemies.splice(index, 1);
-        this.characterEliminateNearbyEnemies();
-    }
 
 
-    removeDeadChicken(enemy) {
-        let index = this.level.enemies.indexOf(enemy);
-        this.character.speedY = 0;
-        this.level.enemies[index].deadChickenSound.play();
-        this.deadChicken = new DeadChicken(this.level.enemies[index].x);
-        this.deadEnemies.push(this.deadChicken);
-        this.level.enemies.splice(index, 1);
-        this.characterEliminateNearbyEnemies();
-    }
 
 
-    characterEliminateNearbyEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            let xDifference = this.character.x - enemy.x;
-            if (xDifference < 75 && xDifference > -100) {
-                this.character.speedY = 0;
-                let index = this.level.enemies.indexOf(enemy);
-                this.collidingSmallOrNormalChicken(index);
-            }
-        });
-    }
 
 
-    collidingSmallOrNormalChicken(indexEnemy) {
-        if (this.level.enemies[indexEnemy].height == 70) {
-            this.deadChicken = new DeadChicken(this.level.enemies[indexEnemy].x);
-            this.deadEnemies.push(this.deadChicken);
-            this.level.enemies.splice(indexEnemy, 1);
-        }
-        else if (this.level.enemies[indexEnemy].height == 50) {
-            this.deadSmallChicken = new DeadSmallChicken(this.level.enemies[indexEnemy].x);
-            this.deadEnemies.push(this.deadSmallChicken);
-            this.level.enemies.splice(indexEnemy, 1);
-        }
-    }
+
+
+
+
 
 
     bottlesToThrow() {
@@ -207,21 +304,7 @@ class World {
     }
 
 
-    checkCollision() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                let index = this.level.enemies.indexOf(enemy);
-                if (this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && this.level.enemies[index].height == 50) {
-                    this.removeDeadSmallChicken(index);
-                } else if (this.character.y >= 105 && this.character.speedY >= -30 && this.character.speedY < 0 && this.level.enemies[index].height == 70) {
-                    this.removeDeadChicken(enemy);
-                } else {
-                    this.character.hit();
-                    this.statusbarHealth.setPercentage(this.character.energy);
-                }
-            }
-        });
-    }
+
 
 
     checkCollectCoins() {
@@ -258,11 +341,7 @@ class World {
     }
 
 
-    checkCollisions() {
-        this.checkCollision();
-        this.checkCollectCoins();
-        this.checkCollectBottles();
-    }
+
 
 
     // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte

@@ -83,6 +83,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * @param {movable object} mo 
+     * @eturns the position, height and width of the actual object, to check a collision with
+     * other objects
+     */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -91,6 +96,12 @@ class MovableObject extends DrawableObject {
     }
 
 
+
+    /**
+     * @param {coins which can be collected} coin 
+     * @returns the position, height and width of the coin, to check a collision
+     * in the game it will be called by the character
+     */
     isCollidingCoin(coin) {
         return (this.x + 25) + (this.width - 40) > (coin.x + 45) &&
             (this.y + 115) + (this.height - 125) > (coin.y + 45) &&
@@ -99,6 +110,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * @param {bottles which can be collected} coin 
+     * @returns the position, height and width of the bottle, to check a collision
+     * in the game it will be called by the character
+     */
     isCollidingBottle(bottle) {
         return (this.x + 25) + (this.width - 40) > (bottle.x + 30) &&
             (this.y + 115) + (this.height - 125) > (bottle.y + 15) &&
@@ -107,11 +123,16 @@ class MovableObject extends DrawableObject {
     }
 
 
+
+    /**
+     * if character collision with chickens, his energy reduces
+     * if endboss collision with throwable bottles, his energy reduces
+     */
     hit() {
         this.energy -= 0.5;
         if (this.energy < 0) {
             this.energy = 0;
-        } else {
+        } else { //time in ms when endboss or character collision 
             this.lastHit = new Date().getTime();
         }
     }
@@ -122,6 +143,10 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * @param {time how long sound and animation from character and enboss gets hurt should play} durationPlaySound 
+     * @returns time passed smaller then sound should play
+     */
     isHurt(durationPlaySound) {
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s

@@ -6,6 +6,11 @@ class StatusbarCoin extends DrawableObject {
         this.setCharacteristics();
     }
 
+
+
+    /**
+     * places the bottle next to the number of the collected coins
+     */
     setCharacteristics() {
         this.x = -20;
         this.y = 20;

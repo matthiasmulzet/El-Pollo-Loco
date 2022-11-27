@@ -38,35 +38,46 @@ class ThrowableObject extends MovableObject {
 
 
     throw() {
-        if (this.chaotherDirection == true) {
-            this.speedY = -25;
-            console.log('other direction');
-        }
-        else {
-            this.speedY = 25;
-        }
+        this.checkDirectionThrowBottle();
         this.applyGravity();
         setInterval(() => {
-
-
-            if (this.colliding == true) {
-                this.playAnimation(this.BOTTLE_SPLASH);
-                this.speedY = 0;
-                setTimeout(() => {
-                    this.colliding = false;
-                }, 1000);
-            }
-
-            else if (this.colliding == false) {
-                this.playAnimation(this.BOTTLE_IMAGES);
-                if (this.otherDirection == true) {
-                    this.x -= 20;
-                }
-                else {
-                    this.x += 20;
-                }
-            }
-
+            if (this.colliding == true)
+                this.animateBottleBreak();
+            else if (this.colliding == false)
+                this.bottleDisappearsFromScreen();
         }, 50);
+    }
+
+
+
+    /**
+     * which direction should bottle be thrown
+     */
+    checkDirectionThrowBottle() {
+        if (this.otherDirection == true)
+            this.speedY = -25;
+        else
+            this.speedY = 25;
+    }
+
+
+    /**
+     * bottle falls out of screen
+     */
+    bottleDisappearsFromScreen() {
+        this.playAnimation(this.BOTTLE_IMAGES);
+        if (this.otherDirection == true)
+            this.x -= 20;
+        else
+            this.x += 20;
+    }
+
+
+    animateBottleBreak() {
+        this.playAnimation(this.BOTTLE_SPLASH);
+        this.speedY = 0; //when bottle collides with object, bottle should not move more on y axis
+        setTimeout(() => {
+            this.colliding = false;
+        }, 1000);
     }
 }
