@@ -58,7 +58,7 @@
 /* Ipads and littlere devices controls */
 .controls-responsive {
     position: absolute;
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -101,33 +101,17 @@
 
 /* Ipads and littlere devices controls */
 
-
 /* 
     ##Device = Tablets, Ipads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-@media (min-width: 768px) and (max-width: 1368px) {
-    .controls-responsive {
-        display: flex;
-    }
-}
 
 
-@media (max-width: 1368px) {
-    .controls-space-up {
+
+
+@media (max-width: 1000px) {
+    .img-from {
         display: none;
-    }
-
-    .controls-d {
-        display: none;
-    }
-
-    .controls-arrow-up {
-        display: unset;
-    }
-
-    .controls-bottle {
-        display: unset;
     }
 }
 
@@ -135,10 +119,6 @@
 @media (max-width: 768px) {
     .controls-responsive {
         display: flex;
-    }
-
-    .img-from {
-        display: none;
     }
 }
 
@@ -184,6 +164,10 @@
 
 
 @media (max-width: 400px) {
+    .rotate-device-request span {
+        font-size: 18px;
+    }
+
     h1 {
         font-size: 40px;
     }

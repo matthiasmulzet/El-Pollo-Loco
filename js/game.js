@@ -2,19 +2,26 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 level = level1;
+screenLessThen1368px = false;
 
 
 function init() {
     canvas = document.getElementById('canvas');
+    if (screenLessThen1368px)
+        showResponsiveControlButtons();
     checkOrientation();
     initLevel(); //creates all Elements in the game, except character
-    document.getElementById('controls-responsive').classList.remove('d-none');
-    //buttons to go, jump and throw with character will be shown
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen-without-canvas').classList.add('d-none');
+}
+
+
+function showResponsiveControlButtons() {
+    document.getElementById('controls-responsive').classList.remove('d-none');
+    //buttons to go, jump and throw with character will be shown
 }
 
 
@@ -31,6 +38,26 @@ function checkOrientation() {
     else {
         document.getElementById('canvas').style.height = `100%`;
     }
+}
+
+
+window.addEventListener('resize', changeControlOverview);
+
+
+function changeControlOverview() {
+    if (window.screen.width <= 1368) {
+        screenLessThen1368px = true;
+        document.getElementById('controls-space-up').style.display = 'none';
+        document.getElementById('controls-d').style.display = 'none';
+        document.getElementById('controls-arrow-up').style.display = 'unset';
+        document.getElementById('controls-bottle').style.display = 'unset';
+    }
+
+    if (window.screen.width < 600)
+        document.getElementById('rotate-device').classList.remove('d-none');
+
+    if (window.screen.width > 600)
+        document.getElementById('rotate-device').classList.add('d-none');
 }
 
 
