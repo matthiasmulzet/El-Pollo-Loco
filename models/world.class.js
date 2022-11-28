@@ -201,6 +201,13 @@ class World {
     }
 
 
+    removeCoin(coin) {
+        let index = this.level.coins.indexOf(coin);
+        this.level.coins.splice(index, 1);
+    }
+
+
+
     checkCollectBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingBottle(bottle)) {
@@ -209,6 +216,12 @@ class World {
                 this.scoreBottles += 1;
             }
         })
+    }
+
+
+    removeBottle(bottle) {
+        let index = this.level.bottles.indexOf(bottle);
+        this.level.bottles.splice(index, 1);
     }
 
 
@@ -249,19 +262,13 @@ class World {
 
     checkBottleHit() {
         if (this.bottlesToThrow()) {
-            let actualBottle = this.throwableObjects.length - 1;
             this.level.enemies.forEach((enemy) => {
                 this.throwableObjects.forEach((bottle) => {
                     if (bottle.isColliding(enemy)) {
-                        bottle.bottleBreak.play();
                         let indexEnemy = this.level.enemies.indexOf(enemy);
                         let indexBottle = this.throwableObjects.indexOf(bottle);
-                        bottle.colliding = true; //animates bottle break in throwable-object.class.js file
-                        bottle.y = this.throwableObjects[indexBottle].y;
-                        if (this.collidingWithEndboss(indexEnemy))
-                            this.endbossGetsHurt(indexEnemy, indexBottle);
-                        else
-                            this.chickenGetsKilled(indexEnemy, indexBottle, actualBottle);
+                        this.bottleBreaks(bottle, indexBottle);
+                        this.hurtEndbossOrKillChicken(indexEnemy, indexBottle);
                     }
                 })
             })
@@ -271,6 +278,29 @@ class World {
 
     bottlesToThrow() {
         return this.throwableObjects.length > 0
+    }
+
+
+    /**
+     * @param {object} bottle ThrowableObject
+     * @param {number} indexBottle index of bottle which kills enemy and breaks
+     */
+    bottleBreaks(bottle, indexBottle) {
+        bottle.bottleBreak.play();
+        bottle.colliding = true; //animates bottle break in throwable-object.class.js file
+        bottle.y = this.throwableObjects[indexBottle].y;
+    }
+
+
+    /**
+     * @param {number} indexEnemy index of enemy who gets hit with bottle
+     * @param {number} indexBottle index of bottle which hits chicken
+     */
+    hurtEndbossOrKillChicken(indexEnemy, indexBottle) {
+        if (this.collidingWithEndboss(indexEnemy))
+            this.endbossGetsHurt(indexEnemy, indexBottle);
+        else
+            this.chickenGetsKilled(indexEnemy, indexBottle);
     }
 
 
@@ -302,25 +332,23 @@ class World {
     /**
      * @param {number} indexEnemy index of enemy from level.enemies array who gets killed
      * @param {number} indexBottle index of the bottle who kills the enemy
-     * @param {number} actualBottle
      */
-    chickenGetsKilled(indexEnemy, indexBottle, actualBottle) {
+    chickenGetsKilled(indexEnemy, indexBottle) {
         this.level.enemies[indexEnemy].deadChickenSound.play();
         setTimeout(() => {
             this.throwableObjects.splice(indexBottle, 1);
         }, 400);
         this.collidingSmallOrNormalChicken(indexEnemy);
-        this.bottleEliminateNearbyEnemies(actualBottle);
+        this.bottleEliminateNearbyEnemies(indexBottle);
     }
 
 
     /**
-     * 
-     * @param {*} actualBottle 
+    * @param {number} indexBottle index of the bottle who kills the enemy
      */
-    bottleEliminateNearbyEnemies(actualBottle) {
+    bottleEliminateNearbyEnemies(indexBottle) {
         this.level.enemies.forEach((enemy) => {
-            let xDifference = this.throwableObjects[actualBottle].x - enemy.x;
+            let xDifference = this.throwableObjects[indexBottle].x - enemy.x;
             if (xDifference < 75 && xDifference > -95) {
                 let index = this.level.enemies.indexOf(enemy);
                 this.collidingSmallOrNormalChicken(index);
@@ -329,80 +357,42 @@ class World {
     }
 
 
-
     checkEndboss() {
         let lastIndex = this.level.enemies.length - 1;
         let endboss = this.level.enemies[lastIndex];
         let xDifference = endboss.x - this.character.x;
-        if (xDifference < 580) {
+        if (this.endBossIsInScreen(xDifference)) {
             endboss.hadFirstContact = true;
             endboss.inScreen = true;
-            this.statusbarEndboss.inScreen = true;
+            this.statusbarEndboss.inScreen = true; //statusbar appears
         }
+        this.checkDirectionEndboss(endboss);
+    }
 
-        if (endboss.x + 200 < this.character.x) {
+
+    endBossIsInScreen(xDifference) {
+        return xDifference < 580;
+    }
+
+
+    characterIsBehindEndboss(endboss) {
+        return endboss.x + 200 < this.character.x;
+    }
+
+
+    checkDirectionEndboss(endboss) {
+        if (this.characterIsBehindEndboss(endboss))
             endboss.otherDirection = true;
-        }
-
-        else {
+        else
             endboss.otherDirection = false;
-        }
     }
 
 
-
-    removeCoin(coin) {
-        let index = this.level.coins.indexOf(coin);
-        this.level.coins.splice(index, 1);
-    }
-
-
-
-
-
-    removeBottle(bottle) {
-        let index = this.level.bottles.indexOf(bottle);
-        this.level.bottles.splice(index, 1);
-    }
-
-
-
-
-
-    // Fügt alle Objekte zu unserem Canvas hinzu, zeichnet Hintergrund und Obejekte
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+        // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-
+        this.drawObjects();
         this.ctx.translate(-this.camera_x, 0);
-        // ------- Space for fixed objects ------- 
-        this.addToMap(this.statusbarHealth);
-        this.addToMap(this.statusbarBottle);
-        this.addToMap(this.statusbarCoin);
-        if (this.statusbarEndboss.inScreen == true) {
-            this.addToMap(this.statusbarEndboss);
-        }
-        this.drawScore();
-        this.ctx.translate(this.camera_x, 0); //Forwards
-
-        this.addToMap(this.character);
-
-        this.addObjectsToMap(this.deadEnemies);
-        for (let i = 0; i < this.level.enemies.length - 1; i++) {
-            const actualEnemy = this.level.enemies[i];
-            this.addToMap(actualEnemy);
-        }
-        this.addToMap(this.level.enemies[this.level.enemies.length - 1]);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-        this.addObjectsToMap(this.throwableObjects);
-
-        this.ctx.translate(-this.camera_x, 0);
-
         // draw wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function () {
@@ -411,6 +401,58 @@ class World {
     }
 
 
+    drawObjects() {
+        this.drawBackgroundAndClouds();
+        this.ctx.translate(-this.camera_x, 0);
+        this.drawStatusbars();
+        this.drawScore();
+        this.ctx.translate(this.camera_x, 0); //Forwards
+        this.addToMap(this.character);
+        this.drawEnemiesAndEndboss();
+        this.drawCollectableObjects();
+        this.addObjectsToMap(this.throwableObjects);
+    }
+
+
+    drawBackgroundAndClouds() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+    }
+
+
+    drawStatusbars() {
+        this.addToMap(this.statusbarHealth);
+        this.addToMap(this.statusbarBottle);
+        this.addToMap(this.statusbarCoin);
+        if (this.statusbarEndboss.inScreen == true) {
+            this.addToMap(this.statusbarEndboss);
+        }
+    }
+
+
+    drawEnemiesAndEndboss() {
+        this.addObjectsToMap(this.deadEnemies);
+        for (let i = 0; i < this.level.enemies.length - 1; i++) {
+            const actualEnemy = this.level.enemies[i];
+            this.addToMap(actualEnemy);
+        }
+        this.addToMap(this.endboss());
+    }
+
+
+    endboss() {
+        return this.level.enemies[this.level.enemies.length - 1]
+    }
+
+
+    drawCollectableObjects() {
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+    }
+
+    /**
+     * @param {array} objects 
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
@@ -418,22 +460,16 @@ class World {
     }
 
 
+    /**
+     * @param {object} mo = moveable Object
+     */
     addToMap(mo) {
-        if (mo.otherDirection) {//img turns to other side
+        if (mo.otherDirection) //img turns to other side
             this.flipImage(mo);
-        }
-        try {
-            mo.draw(this.ctx);
-        } catch (e) {
-            console.log('Error loading image', e);
-            console.log('Could not load image', mo);
-        }
+        mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-
-
-        if (mo.otherDirection) {
+        if (mo.otherDirection)
             this.flipImageBack(mo);
-        }
     }
 
 
