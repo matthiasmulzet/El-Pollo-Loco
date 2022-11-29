@@ -9,7 +9,7 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'];
 
 
-    deadChickenSound = new Audio('../audio/chicken-dead.mp3');
+    deadChickenSound = new Audio('audio/chicken-dead.mp3');
 
 
     constructor() {

@@ -41,8 +41,8 @@ class Endboss extends MovableObject {
     ]
 
 
-    endbossHurt = new Audio('../audio/endboss-hurt.mp3');
-    endbossDead = new Audio('../audio/win.mp3');
+    endbossHurt = new Audio('audio/endboss-hurt.mp3');
+    endbossDead = new Audio('audio/win.mp3');
 
 
     constructor() {

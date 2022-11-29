@@ -11,7 +11,7 @@ class SmallChicken extends MovableObject {
     ];
 
 
-    deadChickenSound = new Audio('../audio/chicken-dead.mp3');
+    deadChickenSound = new Audio('audio/chicken-dead.mp3');
 
 
     constructor() {
