@@ -6,8 +6,6 @@ function showControls() {
     document.getElementById('controls').classList.remove('hidden');
     document.getElementById('startscreen-img').classList.add('grayscale');
     document.getElementById('startscreen-img').classList.remove('no-grayscale');
-    // document.getElementById('canvas').classList.add('grayscale');
-    // document.getElementById('canvas').classList.remove('grayscale');
 }
 
 

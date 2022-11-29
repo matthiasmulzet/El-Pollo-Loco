@@ -14,11 +14,9 @@ function init() {
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);
-    document.getElementById('controls-in-canvas').classList.remove('d-none');
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen-without-canvas').classList.add('d-none');
-    let container = document.getElementById("controls");
-    document.getElementById("canvas").appendChild(container);
+    showControlsInCanvas();
 }
 
 
@@ -42,6 +40,14 @@ function checkOrientation() {
     else {
         document.getElementById('canvas').style.height = `100%`;
     }
+}
+
+
+function showControlsInCanvas() {
+    document.getElementById('controls-in-canvas').classList.remove('d-none');
+    let controls = document.getElementById('controls');
+    document.getElementById('startscreen').appendChild(controls);
+    document.getElementById('controls').classList.add('center-controls');
 }
 
 
