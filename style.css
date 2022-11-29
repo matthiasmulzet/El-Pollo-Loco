@@ -20,6 +20,7 @@ body {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.3s linear;
+    z-index: 1000;
 }
 
 .hidden {
@@ -83,11 +84,27 @@ h1 {
     justify-content: center;
     align-items: center;
     z-index: 200;
+    border-radius: 15px;
     background-color: rgba(0, 0, 0, 80%);
     letter-spacing: 3px;
 }
 
-.rotate-device-request span {
+
+.rotate-device-request-canvas {
+    width: 720px;
+    height: 480px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 80%);
+    letter-spacing: 3px;
+}
+
+
+.rotate-device-request span, .rotate-device-request-canvas span {
     font-size: 20px;
     color: red;
 }
@@ -131,18 +148,27 @@ h1 {
     right: 40px;
 }
 
+.controls-in-canvas {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 30px;
+    padding: 2px 25px;
+}
+
+
 .full-screen, .controls {
     bottom: 15px;
     border-radius: 30px;
     padding: 2px 25px;
 }
 
-.start-game:hover, .full-screen:hover, .controls:hover, .close-div:hover {
+.start-game:hover, .full-screen:hover, .controls:hover, .close-div:hover, .controls-in-canvas:hover {
     scale: 1.1;
     background-color: rgb(243, 224, 16);
 }
 
-.full-screen img, .controls img {
+.full-screen img, .controls img, .controls-in-canvas img {
     width: 36px;
     height: 36px;
 }
@@ -157,6 +183,7 @@ h1 {
     box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 30%);
     border-radius: 20px;
     border: 0.5px solid black;
+    z-index: 10;
 }
 
 .controls-div table {

@@ -14,9 +14,13 @@ function init() {
     setTimeout(() => {
         world = new World(canvas, keyboard);
     }, 100);
+    document.getElementById('controls-in-canvas').classList.remove('d-none');
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen-without-canvas').classList.add('d-none');
+    let container = document.getElementById("controls");
+    document.getElementById("canvas").appendChild(container);
 }
+
 
 
 function showResponsiveControlButtons() {
@@ -47,17 +51,32 @@ window.addEventListener('resize', changeControlOverview);
 function changeControlOverview() {
     if (window.screen.width <= 1368) {
         screenLessThen1368px = true;
-        document.getElementById('controls-space-up').style.display = 'none';
-        document.getElementById('controls-d').style.display = 'none';
-        document.getElementById('controls-arrow-up').style.display = 'unset';
-        document.getElementById('controls-bottle').style.display = 'unset';
+        showBottleAndArrowUpByControls();
     }
-
     if (window.screen.width < 600)
-        document.getElementById('rotate-device').classList.remove('d-none');
-
+        showRotateDeviceWarning();
     if (window.screen.width > 600)
-        document.getElementById('rotate-device').classList.add('d-none');
+        removeRotateDeviceWarning();
+}
+
+
+function showBottleAndArrowUpByControls() {
+    document.getElementById('controls-space-up').style.display = 'none';
+    document.getElementById('controls-d').style.display = 'none';
+    document.getElementById('controls-arrow-up').style.display = 'unset';
+    document.getElementById('controls-bottle').style.display = 'unset';
+}
+
+
+function showRotateDeviceWarning() {
+    document.getElementById('rotate-device').classList.remove('d-none');
+    document.getElementById('rotate-device-canvas').classList.remove('d-none');
+}
+
+
+function removeRotateDeviceWarning() {
+    document.getElementById('rotate-device').classList.add('d-none');
+    document.getElementById('rotate-device-canvas').classList.add('d-none');
 }
 
 
