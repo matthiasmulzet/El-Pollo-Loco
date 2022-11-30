@@ -2,12 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 level = level1;
-screenLessThen1368px = false;
+let responsiveButtons = false;
 
 
 function init() {
     canvas = document.getElementById('canvas');
-    if (screenLessThen1368px)
+    if (responsiveButtons)
         showResponsiveControlButtons();
     checkOrientation();
     initLevel(); //creates all Elements in the game, except character
@@ -50,19 +50,38 @@ function showControlsInCanvas() {
     document.getElementById('controls').classList.add('center-controls');
 }
 
+// let portrait = window.matchMedia("(orientation: portrait)");
 
-window.addEventListener('resize', changeControlOverview);
+// portrait.addEventListener("change", function(e) {
+//     if(e.matches) {
+//         console.log('portrait');
+//     } else {
+//         console.log('landscape');
+//     }
+// })
+
+
+screen.orientation.addEventListener('change', changeControlOverview);
+
+
+// window.addEventListener('resize', changeControlOverview);
 
 
 function changeControlOverview() {
-    if (window.screen.width <= 1368) {
-        screenLessThen1368px = true;
-        showBottleAndArrowUpByControls();
-    }
-    if (window.screen.width < 600)
-        showRotateDeviceWarning();
-    if (window.screen.width > 600)
+    // if (window.screen.width <= 1368) {
+    //     screenLessThen1368px = true;
+    //     showBottleAndArrowUpByControls();
+    // }
+    if (window.matchMedia("(orientation: landscape)").matches) {
         removeRotateDeviceWarning();
+        responsiveButtons = true;
+        showBottleAndArrowUpByControls();
+        // console.log('landscape');
+    }
+
+    else if (window.matchMedia("(orientation: portrait").matches)
+        showRotateDeviceWarning();
+    // console.log('portrait');
 }
 
 
