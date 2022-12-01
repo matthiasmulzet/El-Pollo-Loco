@@ -10,6 +10,17 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     margin: 0px;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
 }
 
 .d-none {
@@ -48,6 +59,27 @@ canvas {
     display: block;
     border-radius: 15px;
     box-shadow: 0px 0px 5px 2px rgb(0 0 0 / 50%);
+}
+
+.buttons-in-canvas {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    top: 10px;
+}
+
+.controls-in-canvas {
+    left: 55%;
+}
+
+.full-screen-canvas {
+    right: 55%;
+}
+
+.buttons-in-canvas div {
+    border-radius: 30px;
+    padding: 2px 25px;
 }
 
 
@@ -148,14 +180,6 @@ h1 {
     right: 40px;
 }
 
-.controls-in-canvas {
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 30px;
-    padding: 2px 25px;
-}
-
 
 .full-screen, .controls {
     bottom: 15px;
@@ -163,12 +187,13 @@ h1 {
     padding: 2px 25px;
 }
 
-.start-game:hover, .full-screen:hover, .controls:hover, .close-div:hover, .controls-in-canvas:hover {
+.start-game:hover, .full-screen:hover, .controls:hover, .close-div:hover,
+.controls-in-canvas:hover, .full-screen-canvas:hover {
     scale: 1.1;
     background-color: rgb(243, 224, 16);
 }
 
-.full-screen img, .controls img, .controls-in-canvas img {
+.full-screen img, .controls img, .controls-in-canvas img, .full-screen-canvas img {
     width: 36px;
     height: 36px;
 }

@@ -44,45 +44,13 @@ function checkOrientation() {
 
 
 function showControlsInCanvas() {
-    document.getElementById('controls-in-canvas').classList.remove('d-none');
+    document.getElementById('buttons-in-canvas').classList.remove('d-none');
     let controls = document.getElementById('controls');
     document.getElementById('startscreen').appendChild(controls);
     document.getElementById('controls').classList.add('center-controls');
 }
 
-// let portrait = window.matchMedia("(orientation: portrait)");
 
-// portrait.addEventListener("change", function(e) {
-//     if(e.matches) {
-//         console.log('portrait');
-//     } else {
-//         console.log('landscape');
-//     }
-// })
-
-
-screen.orientation.addEventListener('change', changeControlOverview);
-
-
-// window.addEventListener('resize', changeControlOverview);
-
-
-function changeControlOverview() {
-    // if (window.screen.width <= 1368) {
-    //     screenLessThen1368px = true;
-    //     showBottleAndArrowUpByControls();
-    // }
-    if (window.matchMedia("(orientation: landscape)").matches) {
-        removeRotateDeviceWarning();
-        responsiveButtons = true;
-        showBottleAndArrowUpByControls();
-        // console.log('landscape');
-    }
-
-    else if (window.matchMedia("(orientation: portrait").matches)
-        showRotateDeviceWarning();
-    // console.log('portrait');
-}
 
 
 function showBottleAndArrowUpByControls() {
@@ -225,3 +193,20 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 68)
         keyboard.D = false;
 });
+
+
+
+window.addEventListener("orientationchange", changeControlOverview);
+screen.orientation.addEventListener('change', changeControlOverview);
+
+
+function changeControlOverview() {
+    if (window.matchMedia("(orientation: landscape)").matches) {
+        removeRotateDeviceWarning();
+        responsiveButtons = true;
+        showBottleAndArrowUpByControls();
+    }
+
+    else if (window.matchMedia("(orientation: portrait").matches)
+        showRotateDeviceWarning();
+}

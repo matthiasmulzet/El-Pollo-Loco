@@ -84,13 +84,13 @@
     margin-right: 20px;
 }
 
+
 .controls-left-side img, .controls-right-side img {
     width: 30px;
     height: 35px;
     padding: 3px 10px;
     background-color: rgb(255, 200, 0);
     border-radius: 100%;
-    user-select: none;
 }
 
 .arrow-right {
@@ -149,7 +149,7 @@
         padding: 2px 18px;
     }
 
-    .full-screen img, .controls img {
+    .full-screen img, .controls img, .controls-in-canvas img, .full-screen-canvas {
         width: 30px;
         height: 30px;
     }
@@ -199,7 +199,7 @@
         padding: 2px 15px;
     }
 
-    .full-screen img, .controls img, .controls-in-canvas {
+    .full-screen img, .controls img, .controls-in-canvas img, .full-screen-canvas img {
         width: 28px;
         height: 28px;
     }

@@ -28,30 +28,48 @@ function closeControls() {
  */
 function showFullScreen() {
     let startscreen = document.getElementById('startscreen');
+    let actualWidth = startscreen.offsetWidth;
+    let actualHeight = startscreen.offsetHeight;
     if (startscreen.requestFullscreen) {
         startscreen.requestFullscreen();
-        document.getElementById('overlay-game-over-or-win').style = ' width: 100%; height: 100%;';
-        document.getElementById('canvas').style = ' width: 100%; height: 100%;';
-    }
-
-    else if (startscreen.webkitRequestFullScreen) {
+        showFullScreenCanvasAndGameOver();
+    } else if (startscreen.webkitRequestFullScreen) {
         startscreen.webkitRequestFullScreen();
-        document.getElementById('overlay-game-over-or-win').style = ' width: 100%; height: 100%;';
-        document.getElementById('canvas').style = ' width: 100%; height: 100%;';
+        showFullScreenCanvasAndGameOver();
     }
-    document.getElementById('fullscreen').onclick = function () { closeFullScreen() };
+    document.getElementById('fullscreen').onclick = function () { closeFullScreen(actualWidth, actualHeight) };
+    document.getElementById('fullscreen-in-canvas').onclick = function () { closeFullScreen(actualWidth, actualHeight) };
 }
 
 
-function closeFullScreen() {
+function showFullScreenCanvasAndGameOver() {
+    document.getElementById('overlay-game-over-or-win').style = ' width: 100%; height: 100%;';
+    document.getElementById('canvas').style = ' width: 100%; height: 100%;';
+}
+
+
+/**
+ * 
+ * @param {number} actualWidth of the startscreen
+ * @param {number} actualHeight of the startscreen
+ */
+function closeFullScreen(actualWidth, actualHeight) {
     if (document.exitFullscreen) {
         document.exitFullscreen();
-    }
-
-    else if (document.webkitExitFullscreen) {
+        setNormalScreenCanvasAndGameOver(actualWidth, actualHeight);
+    } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+        setNormalScreenCanvasAndGameOver(actualWidth, actualHeight);
     }
     document.getElementById('fullscreen').onclick = function () { showFullScreen() };
+    document.getElementById('fullscreen-in-canvas').onclick = function () { showFullScreen() };
+}
+
+
+
+function setNormalScreenCanvasAndGameOver(actualWidth, actualHeight) {
+    document.getElementById('overlay-game-over-or-win').style = `width: ${actualWidth}px; height: ${actualHeight}px;`;
+    document.getElementById('canvas').style = `width: ${actualWidth}px; height: ${actualHeight}px;`;
 }
 
 
