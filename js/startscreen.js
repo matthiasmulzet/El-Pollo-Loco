@@ -1,3 +1,11 @@
+
+
+function showControlsBottleOrD() {
+    if (screen.width < 1368)
+        showBottleAndArrowUpByControls();
+}
+
+
 /**
  * when you click on the Gameboy icon, this function shows the control to move the character and throw bottles
  */
@@ -9,8 +17,6 @@ function showControls() {
 }
 
 
-
-
 /**
  * this function close the control overview for moving the character
  */
@@ -20,7 +26,6 @@ function closeControls() {
     document.getElementById('startscreen-img').classList.add('no-grayscale');
     document.getElementById('startscreen-img').classList.remove('grayscale');
 }
-
 
 
 /**

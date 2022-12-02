@@ -116,7 +116,7 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            this.collisionChicken.pause();
+            playOrStopSound(this.collisionChicken);
             this.animateCharacterImages();
         }, 100); //10 frames pro Sekunde
     }
@@ -178,7 +178,7 @@ class Character extends MovableObject {
     animateHurt() {
         this.playAnimation(this.IMAGES_HURT);
         if (this.isHurt(0.5)) {
-            this.collisionChicken.play();
+            playOrStopSound(this.collisionChicken);
         }
     }
 

@@ -1,3 +1,10 @@
+@media screen and (orientation: portrait) and (max-width: 1368px) {
+    .rotate-device-request, .rotate-device-request-canvas {
+        display: flex;
+    }
+}
+
+
 @media only screen and (max-width: 720px) {
     #text-game-over-or-win {
         font-size: 55px;
@@ -78,12 +85,13 @@
 
 .controls-left-side {
     margin-left: 20px;
+    display: flex;
 }
 
 .controls-right-side {
     margin-right: 20px;
+    display: flex;
 }
-
 
 .controls-left-side img, .controls-right-side img {
     width: 30px;
@@ -91,6 +99,7 @@
     padding: 3px 10px;
     background-color: rgb(255, 200, 0);
     border-radius: 100%;
+    display: block;
 }
 
 .arrow-right {
@@ -115,9 +124,6 @@
     ##Device = Tablets, Ipads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-
-
-
 
 @media (max-width: 1000px) {
     .img-from {
@@ -144,12 +150,13 @@
         padding: 8px;
     }
 
-    .full-screen, .controls {
+    .full-screen, .sound, .controls {
         bottom: 10px;
         padding: 2px 18px;
     }
 
-    .full-screen img, .controls img, .controls-in-canvas img, .full-screen-canvas {
+    .full-screen img, .sound, .controls img,
+    .controls-in-canvas img, .full-screen-canvas {
         width: 30px;
         height: 30px;
     }
@@ -199,7 +206,8 @@
         padding: 2px 15px;
     }
 
-    .full-screen img, .controls img, .controls-in-canvas img, .full-screen-canvas img {
+    .full-screen img, .sound img, .controls img,
+    .controls-in-canvas img, .full-screen-canvas img {
         width: 28px;
         height: 28px;
     }

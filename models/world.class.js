@@ -175,6 +175,9 @@ class World {
         //generates img of a dead small chicken on the position where you jumped on
         this.deadEnemies.push(this.deadSmallChicken);
         this.level.enemies.splice(index, 1);
+        setTimeout(() => {
+            this.deadEnemies.splice(0, 1);
+        }, 2000);
     }
 
 
@@ -187,6 +190,9 @@ class World {
         //generates img of a dead chicken on the position where you jumped on
         this.deadEnemies.push(this.deadChicken);
         this.level.enemies.splice(index, 1);
+        setTimeout(() => {
+            this.deadEnemies.splice(0, 1);
+        }, 2000);
     }
 
 

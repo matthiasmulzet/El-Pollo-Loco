@@ -2,14 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 level = level1;
-let responsiveButtons = false;
-
+let playSound = true;
 
 function init() {
     canvas = document.getElementById('canvas');
-    if (responsiveButtons)
+    if (screen.width < 1368)
         showResponsiveControlButtons();
-    checkOrientation();
     initLevel(); //creates all Elements in the game, except character
     setTimeout(() => {
         world = new World(canvas, keyboard);
@@ -18,7 +16,6 @@ function init() {
     document.getElementById('startscreen-without-canvas').classList.add('d-none');
     showControlsInCanvas();
 }
-
 
 
 function showResponsiveControlButtons() {
@@ -51,8 +48,6 @@ function showControlsInCanvas() {
 }
 
 
-
-
 function showBottleAndArrowUpByControls() {
     document.getElementById('controls-space-up').style.display = 'none';
     document.getElementById('controls-d').style.display = 'none';
@@ -60,17 +55,6 @@ function showBottleAndArrowUpByControls() {
     document.getElementById('controls-bottle').style.display = 'unset';
 }
 
-
-function showRotateDeviceWarning() {
-    document.getElementById('rotate-device').classList.remove('d-none');
-    document.getElementById('rotate-device-canvas').classList.remove('d-none');
-}
-
-
-function removeRotateDeviceWarning() {
-    document.getElementById('rotate-device').classList.add('d-none');
-    document.getElementById('rotate-device-canvas').classList.add('d-none');
-}
 
 
 /**
@@ -150,6 +134,28 @@ function responsiveThrowBottle() {
 }
 
 
+function setSoundImg() {
+    let soundImg = document.getElementById('sound-img');
+    if (soundImg.getAttribute('src') == 'img/9_intro_outro_screens/start/sound-on-icon.svg') {
+        soundImg.src = 'img/9_intro_outro_screens/start/sound-off-icon.svg';
+        playSound = false;
+    } else {
+        soundImg.src = 'img/9_intro_outro_screens/start/sound-on-icon.svg';
+        playSound = true;
+    }
+}
+
+
+function playOrStopSound(sound) {
+    if (playSound) {
+        sound.play();
+    } else {
+        sound.pause();
+    }
+}
+
+
+
 /**
  * when the Content in the DOM is loaded, the responsive arrows and bottle are ready for touch
  */
@@ -193,20 +199,3 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 68)
         keyboard.D = false;
 });
-
-
-
-window.addEventListener("orientationchange", changeControlOverview);
-screen.orientation.addEventListener('change', changeControlOverview);
-
-
-function changeControlOverview() {
-    if (window.matchMedia("(orientation: landscape)").matches) {
-        removeRotateDeviceWarning();
-        responsiveButtons = true;
-        showBottleAndArrowUpByControls();
-    }
-
-    else if (window.matchMedia("(orientation: portrait").matches)
-        showRotateDeviceWarning();
-}
