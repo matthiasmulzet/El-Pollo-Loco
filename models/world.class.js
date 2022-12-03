@@ -1,9 +1,6 @@
 class World {
+    draw = new Draw();
     character = new Character();
-    statusbarHealth = new StatusbarHealth();
-    statusbarBottle = new StatusbarBottle();
-    statusbarCoin = new StatusbarCoin();
-    statusbarEndboss = new StatusbarEndboss();
     level = level1;
 
     throwableObjects = []; //array where the bottles to throw are in
@@ -22,8 +19,8 @@ class World {
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.draw.draw();
         this.keyboard = keyboard;
-        this.draw();
         this.setWorldEndboss();
         this.setWorldCharacter();
         this.run();
@@ -36,7 +33,6 @@ class World {
     setWorldCharacter() {
         this.character.world = this;
     }
-
 
     /**
      * due to this function we get access to this file in the enboss.class.js file
@@ -86,7 +82,7 @@ class World {
             this.animateDeadOfChicken(index);
         else {
             this.character.hit();
-            this.statusbarHealth.setPercentage(this.character.energy);
+            this.draw.statusbarHealth.setPercentage(this.character.energy);
         }
     }
 
@@ -148,7 +144,7 @@ class World {
      */
     chickenIsNearby(enemy) {
         let xDifference = this.character.x - enemy.x;
-        return xDifference < 75 && xDifference > -100
+        return xDifference < 75 && xDifference > -90
     }
 
 
@@ -163,7 +159,6 @@ class World {
         else if (chickenWhoGetsKilled.height == 50) //height of a small chicken
             this.showDeadSmallChicken(indexEnemy);
     }
-
 
 
     /**
@@ -213,7 +208,6 @@ class World {
     }
 
 
-
     checkCollectBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingBottle(bottle)) {
@@ -241,11 +235,11 @@ class World {
             if (this.character.otherDirection == true) {
                 bottle = new ThrowableObject(this.character.x, this.character.y + 100);
                 bottle.otherDirection = true;
-            }
-            else
+            } else
                 bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.scoreBottles -= 1;
+            this.setOrStopIntervalBottle();
             this.throwNextBottle();
         }
     }
@@ -253,6 +247,20 @@ class World {
 
     wantThrowBottle() {
         return this.keyboard.D && this.scoreBottles > 0 && !this.isInAir
+    }
+
+
+    setOrStopIntervalBottle() {
+        let intervalThrownBottle = setInterval(() => {
+            this.throwableObjects.forEach((thrownBottle) => {
+                if (thrownBottle.y > 1000) {
+                    let index = (this.throwableObjects.indexOf(thrownBottle));
+                    this.throwableObjects.splice(index, 1);
+                    if (this.throwableObjects.length <= 0)
+                        clearInterval(intervalThrownBottle);
+                }
+            });
+        }, 2000);
     }
 
 
@@ -331,7 +339,7 @@ class World {
             this.throwableObjects.splice(indexBottle, 1);
         }, 400);
         endboss.hit();
-        this.statusbarEndboss.setPercentage(endboss.energy);
+        this.draw.statusbarEndboss.setPercentage(endboss.energy);
     }
 
 
@@ -355,7 +363,7 @@ class World {
     bottleEliminateNearbyEnemies(indexBottle) {
         this.level.enemies.forEach((enemy) => {
             let xDifference = this.throwableObjects[indexBottle].x - enemy.x;
-            if (xDifference < 75 && xDifference > -95) {
+            if (xDifference < 75 && xDifference > -90) {
                 let index = this.level.enemies.indexOf(enemy);
                 this.collidingSmallOrNormalChicken(index);
             }
@@ -370,7 +378,7 @@ class World {
         if (this.endBossIsInScreen(xDifference)) {
             endboss.hadFirstContact = true;
             endboss.inScreen = true;
-            this.statusbarEndboss.inScreen = true; //statusbar appears
+            this.draw.statusbarEndboss.inScreen = true; //statusbar appears
         }
         this.checkDirectionEndboss(endboss);
     }
@@ -391,112 +399,5 @@ class World {
             endboss.otherDirection = true;
         else
             endboss.otherDirection = false;
-    }
-
-
-    draw() {
-        // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
-        this.drawObjects();
-        this.ctx.translate(-this.camera_x, 0);
-        // draw wird immer wieder aufgerufen
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
-    }
-
-
-    drawObjects() {
-        this.drawBackgroundAndClouds();
-        this.ctx.translate(-this.camera_x, 0);
-        this.drawStatusbars();
-        this.drawScore();
-        this.ctx.translate(this.camera_x, 0); //Forwards
-        this.addToMap(this.character);
-        this.drawEnemiesAndEndboss();
-        this.drawCollectableObjects();
-        this.addObjectsToMap(this.throwableObjects);
-    }
-
-
-    drawBackgroundAndClouds() {
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-    }
-
-
-    drawStatusbars() {
-        this.addToMap(this.statusbarHealth);
-        this.addToMap(this.statusbarBottle);
-        this.addToMap(this.statusbarCoin);
-        if (this.statusbarEndboss.inScreen == true) {
-            this.addToMap(this.statusbarEndboss);
-        }
-    }
-
-
-    drawEnemiesAndEndboss() {
-        this.addObjectsToMap(this.deadEnemies);
-        for (let i = 0; i < this.level.enemies.length - 1; i++) {
-            const actualEnemy = this.level.enemies[i];
-            this.addToMap(actualEnemy);
-        }
-        this.addToMap(this.endboss());
-    }
-
-
-    endboss() {
-        return this.level.enemies[this.level.enemies.length - 1]
-    }
-
-
-    drawCollectableObjects() {
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
-    }
-
-    /**
-     * @param {array} objects 
-     */
-    addObjectsToMap(objects) {
-        objects.forEach(o => {
-            this.addToMap(o);
-        });
-    }
-
-
-    /**
-     * @param {object} mo = moveable Object
-     */
-    addToMap(mo) {
-        if (mo.otherDirection) //img turns to other side
-            this.flipImage(mo);
-        mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
-        if (mo.otherDirection)
-            this.flipImageBack(mo);
-    }
-
-
-    flipImage(mo) {
-        this.ctx.save();
-        this.ctx.translate(mo.width, 0);
-        this.ctx.scale(-1, 1);
-        mo.x = mo.x * -1;
-    }
-
-
-    flipImageBack(mo) {
-        mo.x = mo.x * -1;
-        this.ctx.restore();
-    }
-
-
-    drawScore() {
-        this.ctx.font = "34px Arial";
-        this.ctx.fillStyle = "black";
-        this.ctx.fillText(this.scoreCoins, 80, 103);
-        this.ctx.fillText(this.scoreBottles, 173, 103);
     }
 }
