@@ -113,7 +113,7 @@ class World {
      */
     animateDeadOfSmallChicken(index) {
         this.character.speedY = 0;
-        this.level.enemies[index].deadChickenSound.play();
+        playOrStopSound(this.level.enemies[index].deadChickenSound);
         this.showDeadSmallChicken(index);
         this.characterEliminateNearbyEnemies();
     }
@@ -121,7 +121,7 @@ class World {
 
     animateDeadOfChicken(index) {
         this.character.speedY = 0;
-        this.level.enemies[index].deadChickenSound.play();
+        playOrStopSound(this.level.enemies[index].deadChickenSound);
         this.showDeadChicken(index);
         this.characterEliminateNearbyEnemies();
     }
@@ -199,7 +199,7 @@ class World {
     checkCollectCoins() {
         this.level.coins.forEach((coin) => {
             if (this.character.isCollidingCoin(coin)) {
-                this.character.collisionCoin.play();
+                playOrStopSound(this.character.collisionCoin);
                 this.removeCoin(coin);
                 this.scoreCoins += 1;
             }
@@ -217,7 +217,7 @@ class World {
     checkCollectBottles() {
         this.level.bottles.forEach((bottle) => {
             if (this.character.isCollidingBottle(bottle)) {
-                this.character.collisionBottle.play();
+                playOrStopSound(this.character.collisionBottle);
                 this.removeBottle(bottle);
                 this.scoreBottles += 1;
             }
@@ -292,7 +292,7 @@ class World {
      * @param {number} indexBottle index of bottle which kills enemy and breaks
      */
     bottleBreaks(bottle, indexBottle) {
-        bottle.bottleBreak.play();
+        playOrStopSound(bottle.bottleBreak);
         bottle.colliding = true; //animates bottle break in throwable-object.class.js file
         bottle.y = this.throwableObjects[indexBottle].y;
     }
@@ -326,7 +326,7 @@ class World {
      */
     endbossGetsHurt(indexEnemy, indexBottle) {
         let endboss = this.level.enemies[indexEnemy];
-        endboss.endbossHurt.play();
+        playOrStopSound(endboss.endbossHurt);
         setTimeout(() => {
             this.throwableObjects.splice(indexBottle, 1);
         }, 400);
@@ -340,7 +340,7 @@ class World {
      * @param {number} indexBottle index of the bottle who kills the enemy
      */
     chickenGetsKilled(indexEnemy, indexBottle) {
-        this.level.enemies[indexEnemy].deadChickenSound.play();
+        playOrStopSound(this.level.enemies[indexEnemy].deadChickenSound);
         setTimeout(() => {
             this.throwableObjects.splice(indexBottle, 1);
         }, 400);

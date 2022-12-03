@@ -70,11 +70,11 @@ canvas {
 }
 
 .controls-in-canvas {
-    left: 55%;
+    left: 60%;
 }
 
 .full-screen-canvas {
-    right: 55%;
+    right: 60%;
 }
 
 .buttons-in-canvas div {
@@ -117,7 +117,7 @@ h1 {
     align-items: center;
     z-index: 200;
     border-radius: 15px;
-    background-color: rgba(0, 0, 0, 80%);
+    background-color: rgba(0, 0, 0, 50%);
     letter-spacing: 3px;
 }
 
@@ -187,14 +187,14 @@ h1 {
     padding: 2px 25px;
 }
 
-.start-game:hover, .full-screen:hover, .controls:hover, .sound:hover,
-.close-div:hover, .controls-in-canvas:hover, .full-screen-canvas:hover {
+.start-game:hover, .full-screen:hover, .controls:hover, .sound:hover, .close-div:hover,
+.controls-in-canvas:hover, .sound-in-canvas:hover, .full-screen-canvas:hover {
     scale: 1.1;
     background-color: rgb(243, 224, 16);
 }
 
-.full-screen img, .controls img, .sound img,
-.controls-in-canvas img, .full-screen-canvas img {
+.full-screen img, .controls img, .sound img, .controls-in-canvas img,
+.sound-in-canvas img, .full-screen-canvas img {
     width: 36px;
     height: 36px;
     display: block;

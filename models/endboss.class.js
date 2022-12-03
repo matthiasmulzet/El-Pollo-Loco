@@ -61,26 +61,19 @@ class Endboss extends MovableObject {
         //only then the watching animation should be showed
         setInterval(() => {
             if (this.endbossAppearsFirstTime(i)) {
-                // showEndbossIntroWatching(i);
                 this.playAnimation(this.IMAGES_WATCHING);
                 setTimeout(() => {
                     i = 0;
                     this.hadFirstContact = false;
                 }, 1000);
-            } else {
+            } else
                 this.animateDifferentSituations();
-            }
         }, 100);
     }
 
 
     endbossAppearsFirstTime(i) {
         return this.hadFirstContact == true && i > 0
-    }
-
-
-    showEndbossIntroWatching(i) {
-
     }
 
 
@@ -103,7 +96,7 @@ class Endboss extends MovableObject {
         this.world.character.energy = 50; //energy will be increased, that when character 
         //has low energy an gets hurt, he doesn't die immediately after endboss dies
         this.world.character.walking_sound.pause();
-        this.endbossDead.play();
+        playOrStopSound(this.endbossDead);
         setTimeout(() => {
             this.letEndbossDisappear();
             this.world.character.walking_sound.pause();

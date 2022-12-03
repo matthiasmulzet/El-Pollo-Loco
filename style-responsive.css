@@ -1,4 +1,4 @@
-@media screen and (orientation: portrait) and (max-width: 1368px) {
+@media screen and (orientation: portrait) and (max-width: 720px) {
     .rotate-device-request, .rotate-device-request-canvas {
         display: flex;
     }
@@ -155,8 +155,8 @@
         padding: 2px 18px;
     }
 
-    .full-screen img, .sound, .controls img,
-    .controls-in-canvas img, .full-screen-canvas {
+    .full-screen img, .sound img, .controls img, .controls-in-canvas img,
+    .sound-in-canvas img, .full-screen-canvas img {
         width: 30px;
         height: 30px;
     }
@@ -197,7 +197,7 @@
         top: 6px;
     }
 
-    .controls-in-canvas {
+    .controls-in-canvas, .sound-in-canvas, .full-screen-canvas {
         padding: 2px 15px;
     }
 
@@ -206,8 +206,8 @@
         padding: 2px 15px;
     }
 
-    .full-screen img, .sound img, .controls img,
-    .controls-in-canvas img, .full-screen-canvas img {
+    .full-screen img, .sound img, .controls img, .controls-in-canvas img,
+    .sound-in-canvas img, .full-screen-canvas img {
         width: 28px;
         height: 28px;
     }

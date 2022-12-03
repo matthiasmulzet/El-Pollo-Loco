@@ -116,7 +116,7 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            playOrStopSound(this.collisionChicken);
+            this.collisionChicken.pause();
             this.animateCharacterImages();
         }, 100); //10 frames pro Sekunde
     }
@@ -138,7 +138,7 @@ class Character extends MovableObject {
     gameOverAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         clearAllIntervals();
-        this.gameOver.play();
+        playOrStopSound(this.gameOver);
         this.walking_sound.pause();
         this.letCharacterDisappearAndShowGameOver();
         this.redirectToStartpage();
@@ -206,7 +206,7 @@ class Character extends MovableObject {
         this.moveRight();
         this.otherDirection = false;
         if (!this.isAboveGround()) {//when character is not in air
-            this.walking_sound.play();
+            playOrStopSound(this.walking_sound);
         }
     }
 
@@ -220,7 +220,7 @@ class Character extends MovableObject {
         this.moveLeft();
         this.otherDirection = true;
         if (!this.isAboveGround()) {
-            this.walking_sound.play();
+            playOrStopSound(this.walking_sound);
         }
     }
 
@@ -230,7 +230,7 @@ class Character extends MovableObject {
         if (this.shouldJump()) {
             this.walking_sound.pause();
             this.jump();
-            this.jump_sound.play();
+            playOrStopSound(this.jump_sound);
         }
 
         if (this.noJump()) {

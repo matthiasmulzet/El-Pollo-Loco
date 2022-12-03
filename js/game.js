@@ -135,14 +135,33 @@ function responsiveThrowBottle() {
 
 
 function setSoundImg() {
-    let soundImg = document.getElementById('sound-img');
-    if (soundImg.getAttribute('src') == 'img/9_intro_outro_screens/start/sound-on-icon.svg') {
-        soundImg.src = 'img/9_intro_outro_screens/start/sound-off-icon.svg';
-        playSound = false;
-    } else {
-        soundImg.src = 'img/9_intro_outro_screens/start/sound-on-icon.svg';
-        playSound = true;
-    }
+    let soundImgStartScreen = document.getElementById('sound-img');
+    let soundImgCanvas = document.getElementById('sound-in-canvas-img');
+    if (soundOnImg(soundImgStartScreen, soundImgCanvas))
+        setSoundOffImg(soundImgStartScreen, soundImgCanvas);
+    else
+        setSoundOnImg(soundImgStartScreen, soundImgCanvas);
+}
+
+
+function soundOnImg(soundImgStartScreen, soundImgCanvas) {
+    return soundImgStartScreen.getAttribute('src') == 'img/9_intro_outro_screens/start/sound-on-icon.svg' ||
+        soundImgCanvas.getAttribute('src') == 'img/9_intro_outro_screens/start/sound-on-icon.svg'
+}
+
+
+function setSoundOffImg(soundImgStartScreen, soundImgCanvas) {
+    soundImgStartScreen.src = 'img/9_intro_outro_screens/start/sound-off-icon.svg';
+    soundImgCanvas.src = 'img/9_intro_outro_screens/start/sound-off-icon.svg';
+    playSound = false;
+}
+
+
+function setSoundOnImg(soundImgStartScreen, soundImgCanvas) {
+    soundImgStartScreen.src = 'img/9_intro_outro_screens/start/sound-on-icon.svg';
+    document.getElementById('sound-in-canvas-img').src = 'img/9_intro_outro_screens/start/sound-on-icon.svg';
+    // soundImgCanvas.src = 'img/9_intro_outro_screens/start/sound-on-icon.svg';
+    playSound = true;
 }
 
 
