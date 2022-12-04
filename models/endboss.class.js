@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
     increasedSpeed = 0; //gets higher when endboss gets hurt
     otherDirection = false;
     hadFirstContact = false; //will be true when endboss apperas the first time in the screen
+    xDifference;
 
     world;
 
@@ -157,5 +158,57 @@ class Endboss extends MovableObject {
     endbossMoveRight() {
         this.playAnimation(this.IMAGES_WALKING);
         this.x += this.speed;
+    }
+
+
+    /**
+     * @param {number} indexEnemy index of enemy from level.enemies array
+     * @returns indexEnemy == index of endboss
+     */
+    collidingWithEndboss(indexEnemy) {
+        let endbossIndex = this.world.level.enemies.length - 1;
+        return indexEnemy == endbossIndex
+    }
+
+
+    /**
+     * @param {number} indexBottle index of the bottle which is colliding with endboss
+     */
+    endbossGetsHurt(indexBottle) {
+        playOrStopSound(this.endbossHurt);
+        setTimeout(() => {
+            this.world.throwableObjects.splice(indexBottle, 1);
+        }, 400);
+        this.hit();
+        this.world.statusbarEndboss.setPercentage(this.energy);
+    }
+
+
+    checkEndboss(characterXPosition) {
+        this.xDifference = this.x - characterXPosition;
+        if (this.endBossIsInScreen()) {
+            this.hadFirstContact = true;
+            this.inScreen = true;
+            this.world.statusbarEndboss.inScreen = true; //statusbar appears
+        }
+        this.checkDirectionEndboss(characterXPosition);
+    }
+
+
+    endBossIsInScreen() {
+        return this.xDifference < 580;
+    }
+
+
+    checkDirectionEndboss(characterXPosition) {
+        if (this.characterIsBehindEndboss(characterXPosition))
+            this.otherDirection = true;
+        else
+            this.otherDirection = false;
+    }
+
+
+    characterIsBehindEndboss(characterXPosition) {
+        return this.x + 200 < characterXPosition;
     }
 }

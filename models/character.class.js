@@ -252,4 +252,14 @@ class Character extends MovableObject {
     jump() {
         this.speedY = 30;
     }
+
+
+    /**
+     * @param {*obejct} enemy from the level.enemies array
+     * @returns the value that checks if enemies are in the immediate vicinity
+     */
+    chickenIsNearby(enemy) {
+        let xDifference = this.x - enemy.x;
+        return xDifference < 75 && xDifference > -90
+    }
 }

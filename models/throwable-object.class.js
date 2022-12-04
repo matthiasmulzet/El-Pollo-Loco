@@ -47,7 +47,6 @@ class ThrowableObject extends MovableObject {
     }
 
 
-
     /**
      * which direction should bottle be thrown
      */
@@ -56,6 +55,35 @@ class ThrowableObject extends MovableObject {
             this.speedY = -25;
         else
             this.speedY = 25;
+    }
+
+
+    /**
+     * @param {array} throwableObjects of bottles who were thrown
+     */
+    setOrStopIntervalBottle(throwableObjects) {
+        let intervalThrownBottle = setInterval(() => {
+            throwableObjects.forEach((thrownBottle) => {
+                if (thrownBottle.y > 1000) {
+                    let index = (throwableObjects.indexOf(thrownBottle));
+                    throwableObjects.splice(index, 1);
+                    if (throwableObjects.length <= 0)
+                        clearInterval(intervalThrownBottle);
+                }
+            });
+        }, 2000);
+    }
+
+
+    /**
+     * @param {object} bottle ThrowableObject
+     * @param {number} indexBottle index of bottle which kills enemy and breaks
+     * @param {array}  throwableObjects 
+     */
+    bottleBreaks(bottle, indexBottle, throwableObjects) {
+        playOrStopSound(bottle.bottleBreak);
+        this.colliding = true; //animates bottle break in throwable-object.class.js file
+        bottle.y = throwableObjects[indexBottle].y;
     }
 
 

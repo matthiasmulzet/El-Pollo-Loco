@@ -51,6 +51,15 @@ class DrawableObject {
     }
 
 
+
+    drawScore(ctx, scoreCoins, scoreBottles) {
+        ctx.font = "34px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(scoreCoins, 80, 103);
+        ctx.fillText(scoreBottles, 173, 103);
+    }
+
+
     /**
      * creates a blue outline about the objects
      * @param {canvas.getContext('2d');} ctx 
