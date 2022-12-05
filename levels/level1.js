@@ -65,17 +65,17 @@ let clouds = [
 let background = [
     new BackgroundObject('img/5_background/first_half_background.png', 0),
     new BackgroundObject('img/5_background/second_half_background.png', 719),
-    new BackgroundObject('img/5_background/first_half_background.png', 1439),
-    new BackgroundObject('img/5_background/second_half_background.png', 2159),
-    new BackgroundObject('img/5_background/first_half_background.png', 2879),
-    new BackgroundObject('img/5_background/second_half_background.png', 3599),
-    new BackgroundObject('img/5_background/first_half_background.png', 4319),
-    new BackgroundObject('img/5_background/second_half_background.png', 5039),
-    new BackgroundObject('img/5_background/first_half_background.png', 5759),
-    new BackgroundObject('img/5_background/second_half_background.png', 6479),
-    new BackgroundObject('img/5_background/first_half_background.png', 7199),
-    new BackgroundObject('img/5_background/second_half_background.png', 7919),
-    new BackgroundObject('img/5_background/first_half_background.png', 8639)
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 2),
+    new BackgroundObject('img/5_background/second_half_background.png', 719 * 3),
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 4),
+    new BackgroundObject('img/5_background/second_half_background.png', 719 * 5),
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 6),
+    new BackgroundObject('img/5_background/second_half_background.png', 719 * 7),
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 8),
+    new BackgroundObject('img/5_background/second_half_background.png', 719 * 9),
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 10),
+    new BackgroundObject('img/5_background/second_half_background.png', 719 * 11),
+    new BackgroundObject('img/5_background/first_half_background.png', 719 * 12)
 ]
 
 

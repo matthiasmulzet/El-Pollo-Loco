@@ -52,6 +52,9 @@ class World {
      */
     run() {
         setInterval(() => {
+            if (this.character.x >= 2900) {
+                console.log(this.character.x);
+            }
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkBottleHit();

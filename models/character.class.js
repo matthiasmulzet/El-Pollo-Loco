@@ -3,7 +3,6 @@ class Character extends MovableObject {
     y = 135;
     speed = 10;
 
-
     IMAGES_SLEEPING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
