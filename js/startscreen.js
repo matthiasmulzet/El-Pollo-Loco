@@ -38,8 +38,8 @@ function showFullScreen() {
     if (startscreen.requestFullscreen) {
         startscreen.requestFullscreen();
         showFullScreenCanvasAndGameOver();
-    } else if (startscreen.webkitRequestFullScreen) {
-        startscreen.webkitRequestFullScreen();
+    } else if (startscreen.webkitRequestFullscreen) {
+        startscreen.webkitRequestFullscreen();
         showFullScreenCanvasAndGameOver();
     }
     document.getElementById('fullscreen').onclick = function () { closeFullScreen(actualWidth, actualHeight) };
