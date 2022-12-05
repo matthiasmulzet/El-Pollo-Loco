@@ -35,14 +35,14 @@ class SmallChicken extends MovableObject {
      * every chicken gets a random speed
      */
     setSpeedChicken() {
-        this.speed = 0.25 + Math.random() * 1;
+        this.speed = 3 + Math.random() * 3;
     }
 
 
     animate() {
         setInterval(() => {
             this.moveLeft();
-        }, 1000 / 60);
+        }, 100);
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

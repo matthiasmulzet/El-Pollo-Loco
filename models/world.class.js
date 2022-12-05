@@ -245,7 +245,7 @@ class World {
     throwNextBottle() {
         setTimeout(() => {
             this.isInAir = false;
-        }, 500);
+        }, 800);
     }
 
 
@@ -307,7 +307,7 @@ class World {
     bottleEliminateNearbyEnemies(indexBottle) {
         this.level.enemies.forEach((enemy) => {
             let xDifference = this.throwableObjects[indexBottle].x - enemy.x;
-            if (xDifference < 75 && xDifference > -90) {
+            if (xDifference < 75 && xDifference > -80) {
                 let index = this.level.enemies.indexOf(enemy);
                 this.collidingSmallOrNormalChicken(index);
             }

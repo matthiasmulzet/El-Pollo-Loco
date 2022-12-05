@@ -43,7 +43,7 @@ class ThrowableObject extends MovableObject {
                 this.animateBottleBreak();
             else if (this.colliding == false)
                 this.bottleDisappearsFromScreen();
-        }, 50);
+        }, 80);
     }
 
 
@@ -93,9 +93,9 @@ class ThrowableObject extends MovableObject {
     bottleDisappearsFromScreen() {
         this.playAnimation(this.BOTTLE_IMAGES);
         if (this.otherDirection == true)
-            this.x -= 20;
+            this.x -= 30;
         else
-            this.x += 20;
+            this.x += 30;
     }
 
 
@@ -104,6 +104,6 @@ class ThrowableObject extends MovableObject {
         this.speedY = 0; //when bottle collides with object, bottle should not move more on y axis
         setTimeout(() => {
             this.colliding = false;
-        }, 1000);
+        }, 1300);
     }
 }

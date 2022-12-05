@@ -1,7 +1,7 @@
 class Character extends MovableObject {
     height = 300;
     y = 135;
-    speed = 6;
+    speed = 10;
 
 
     IMAGES_SLEEPING = [
@@ -113,7 +113,7 @@ class Character extends MovableObject {
             this.moveLeftOrRight();
             this.jumpOrNoJump();
             this.world.camera_x = -this.x + 100; //game environment moves with the character
-        }, 1000 / 60);
+        }, 30);
 
         setInterval(() => {
             this.collisionChicken.pause();
@@ -260,6 +260,6 @@ class Character extends MovableObject {
      */
     chickenIsNearby(enemy) {
         let xDifference = this.x - enemy.x;
-        return xDifference < 75 && xDifference > -90
+        return xDifference < 75 && xDifference > -80
     }
 }
