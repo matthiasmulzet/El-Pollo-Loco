@@ -52,9 +52,6 @@ class World {
      */
     run() {
         setInterval(() => {
-            if (this.character.x >= 2900) {
-                console.log(this.character.x);
-            }
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkBottleHit();
@@ -72,7 +69,9 @@ class World {
 
     checkCollision() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.endbossIsDead == true)
+                enemy.speed = 1;
+            else if (this.character.isColliding(enemy)) {
                 let index = this.level.enemies.indexOf(enemy); //checks the index of the enemy with which
                 //the character is colliding
                 this.killsEnemyOrGetsHurt(index);
@@ -310,7 +309,7 @@ class World {
     bottleEliminateNearbyEnemies(indexBottle) {
         this.level.enemies.forEach((enemy) => {
             let xDifference = this.throwableObjects[indexBottle].x - enemy.x;
-            if (xDifference < 75 && xDifference > -80) {
+            if (xDifference < 80 && xDifference > -80) {
                 let index = this.level.enemies.indexOf(enemy);
                 this.collidingSmallOrNormalChicken(index);
             }

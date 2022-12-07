@@ -2,6 +2,7 @@ class Character extends MovableObject {
     height = 300;
     y = 135;
     speed = 10;
+    endbossIsDead = false;
 
     IMAGES_SLEEPING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -135,8 +136,8 @@ class Character extends MovableObject {
 
 
     gameOverAnimation() {
+        this.world.endboss.characterIsDead = true;
         this.playAnimation(this.IMAGES_DEAD);
-        clearAllIntervals();
         playOrStopSound(this.gameOver);
         this.walking_sound.pause();
         this.letCharacterDisappearAndShowGameOver();
@@ -145,6 +146,8 @@ class Character extends MovableObject {
 
 
     letCharacterDisappearAndShowGameOver() {
+        this.world.keyboard = 0; // can't move with character
+        this.world.endboss.speed = 0;
         setTimeout(() => {
             setInterval(() => {
                 this.y += 10;
@@ -157,9 +160,10 @@ class Character extends MovableObject {
     redirectToStartpage() {
         setTimeout(() => {
             setTimeout(() => {
+                clearAllIntervals();
                 document.location.reload();
-            }, 3000);
-        }, 5000);
+            }, 2000);
+        }, 3000);
     }
 
 
@@ -259,6 +263,6 @@ class Character extends MovableObject {
      */
     chickenIsNearby(enemy) {
         let xDifference = this.x - enemy.x;
-        return xDifference < 75 && xDifference > -80
+        return xDifference < 80 && xDifference > -80
     }
 }

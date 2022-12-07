@@ -7,6 +7,7 @@ class Endboss extends MovableObject {
     otherDirection = false;
     hadFirstContact = false; //will be true when endboss apperas the first time in the screen
     xDifference;
+    characterIsDead = false;
 
     world;
 
@@ -52,7 +53,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 7000; //starting value
+        this.x = 6500; //starting value
         this.animate();
     }
 
@@ -81,6 +82,8 @@ class Endboss extends MovableObject {
     animateDifferentSituations() {
         if (this.isDead())
             this.animateWin();
+        else if (this.characterIsDead == true)
+            this.playAnimation(this.IMAGES_WATCHING);
         else if (this.isHurt(0.5))
             this.animateHurtEndboss();
         else if (this.endbossShouldMoveLeft())
@@ -94,9 +97,7 @@ class Endboss extends MovableObject {
 
     animateWin() {
         this.playAnimation(this.IMAGES_DEAD);
-        this.world.character.energy = 50; //energy will be increased, that when character 
-        //has low energy an gets hurt, he doesn't die immediately after endboss dies
-        this.world.character.walking_sound.pause();
+        this.stopCharacter();
         playOrStopSound(this.endbossDead);
         setTimeout(() => {
             this.letEndbossDisappear();
@@ -104,6 +105,15 @@ class Endboss extends MovableObject {
             showGameOverOrWin('!!! WIN !!!');
         }, 2000);
         this.clearIntervalsAndRedirectToStartpage();
+    }
+
+
+    stopCharacter() {
+        this.world.character.endbossIsDead = true; //can't collision with chicken
+        this.world.keyboard = 0; // can't move with character
+        this.world.character.energy = 50; //energy will be increased, that when character 
+        //has low energy an gets hurt, he doesn't die immediately after endboss dies
+        this.world.character.walking_sound.pause();
     }
 
 
@@ -124,8 +134,8 @@ class Endboss extends MovableObject {
             clearAllIntervals();
             setTimeout(() => {
                 document.location.reload();
-            }, 3000);
-        }, 5000);
+            }, 2000);
+        }, 4000);
     }
 
 

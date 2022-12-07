@@ -10,21 +10,22 @@ body {
     background-repeat: no-repeat;
     height: 100vh;
     margin: 0px;
-    -webkit-touch-callout: none;
-    /* iOS Safari */
+}
+
+.d-none {
+    display: none !important;
+}
+
+.not-selectable {
     -webkit-user-select: none;
     /* Chrome/Safari/Opera */
     -khtml-user-select: none;
     /* Konqueror */
     -moz-user-select: none;
     /* Firefox */
-    -ms-user-select: none;
+    -o-user-select: none;
     /* Internet Explorer/Edge */
     user-select: none;
-}
-
-.d-none {
-    display: none !important;
 }
 
 .visible {
@@ -70,11 +71,11 @@ canvas {
 }
 
 .controls-in-canvas {
-    left: 60%;
+    left: 58%;
 }
 
 .full-screen-canvas {
-    right: 60%;
+    right: 58%;
 }
 
 .buttons-in-canvas div {
@@ -198,7 +199,6 @@ h1 {
     width: 36px;
     height: 36px;
     display: block;
-    -webkit-user-select: none;
 }
 
 .controls-div {

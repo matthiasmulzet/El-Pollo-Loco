@@ -41,6 +41,7 @@
 <body onload="showControlsBottleOrD()">
     <h1>El Pollo Loco</h1>
 
+
     <div id="startscreen" class="startscreen">
 
         <!--Win or Game Over Overlay-->
@@ -75,15 +76,13 @@
         <!--Responsive Control to move character and throw bottles-->
         <div id="controls-responsive" class="controls-responsive d-none">
             <div class="controls-left-side">
-                <img id="go-left" src="img/10_controls_responsive/arrow-left-solid.svg" alt="arrow-left">
-                <img id="go-right" class="arrow-right" src="img/10_controls_responsive/arrow-right-solid.svg"
-                    alt="arrow-right">
+                <button id="go-left" class="arrow-left not-selectable" alt="arrow-left"></button>
+                <button id="go-right" class="arrow-right not-selectable" alt="arrow-right"></button>
             </div>
 
             <div class="controls-right-side">
-                <img id="jump-up" class="arrow-up" src="img/10_controls_responsive/arrow-up-solid.svg" alt="arrow-up">
-                <img id="throw-bottle" class="bottle" src="img/10_controls_responsive/wine-bottle-solid.svg "
-                    alt="bottle">
+                <button id="jump-up" class="arrow-up not-selectable" alt="arrow-up"></button>
+                <button id="throw-bottle" class="bottle not-selectable" alt="bottle"></button>
             </div>
         </div>
 

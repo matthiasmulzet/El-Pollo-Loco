@@ -83,12 +83,15 @@ function responsivePressEvents() {
  * character moves to left, if you move your finger from the arrow, character stops
  */
 function responsiveGoLeft() {
-    document.getElementById('go-left').addEventListener('touchstart', () => {
+
+    document.getElementById('go-left').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         keyboard.LEFT = true;
         document.getElementById('go-left').classList.add('bg-yellow');
     });
 
-    document.getElementById('go-left').addEventListener('touchend', () => {
+    document.getElementById('go-left').addEventListener('touchend', (e) => {
+        e.preventDefault();
         keyboard.LEFT = false;
         document.getElementById('go-left').classList.remove('bg-yellow');
     });
@@ -96,12 +99,14 @@ function responsiveGoLeft() {
 
 
 function responsiveGoRight() {
-    document.getElementById('go-right').addEventListener('touchstart', () => {
+    document.getElementById('go-right').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         keyboard.RIGHT = true;
         document.getElementById('go-right').classList.add('bg-yellow');
     });
 
-    document.getElementById('go-right').addEventListener('touchend', () => {
+    document.getElementById('go-right').addEventListener('touchend', (e) => {
+        e.preventDefault();
         keyboard.RIGHT = false;
         document.getElementById('go-right').classList.remove('bg-yellow');
     });
@@ -109,12 +114,14 @@ function responsiveGoRight() {
 
 
 function responsiveJumpUp() {
-    document.getElementById('jump-up').addEventListener('touchstart', () => {
+    document.getElementById('jump-up').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         keyboard.SPACE = true;
         document.getElementById('jump-up').classList.add('bg-yellow');
     });
 
-    document.getElementById('jump-up').addEventListener('touchend', () => {
+    document.getElementById('jump-up').addEventListener('touchend', (e) => {
+        e.preventDefault();
         keyboard.SPACE = false;
         document.getElementById('jump-up').classList.remove('bg-yellow');
     });
@@ -122,12 +129,14 @@ function responsiveJumpUp() {
 
 
 function responsiveThrowBottle() {
-    document.getElementById('throw-bottle').addEventListener('touchstart', () => {
+    document.getElementById('throw-bottle').addEventListener('touchstart', (e) => {
+        e.preventDefault();
         keyboard.D = true;
         document.getElementById('throw-bottle').classList.add('bg-yellow');
     });
 
-    document.getElementById('throw-bottle').addEventListener('touchend', () => {
+    document.getElementById('throw-bottle').addEventListener('touchend', (e) => {
+        e.preventDefault();
         keyboard.D = false;
         document.getElementById('throw-bottle').classList.remove('bg-yellow');
     });

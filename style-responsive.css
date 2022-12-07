@@ -93,25 +93,35 @@
     display: flex;
 }
 
-.controls-left-side img, .controls-right-side img {
-    width: 30px;
-    height: 35px;
-    padding: 3px 10px;
-    background-color: rgb(255, 200, 0);
+.controls-left-side button, .controls-right-side button {
+    width: 45px;
+    height: 45px;
+    padding: 0px 7px;
     border-radius: 100%;
     display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    background-origin: content-box;
+}
+
+.arrow-left {
+    background: url('img/10_controls_responsive/arrow-left-solid.svg') rgb(255, 200, 0);
 }
 
 .arrow-right {
     margin-left: 40px;
+    background: url('img/10_controls_responsive/arrow-right-solid.svg') rgb(255, 200, 0);
 }
+
 
 .arrow-up {
     margin-right: 40px;
+    background: url('img/10_controls_responsive/arrow-up-solid.svg') rgb(255, 200, 0);
 }
 
 .bottle {
-    width: 38px !important;
+    background: url('img/10_controls_responsive/wine-bottle-solid.svg') rgb(255, 200, 0);
 }
 
 .bg-yellow {
@@ -159,6 +169,11 @@
     .sound-in-canvas img, .full-screen-canvas img {
         width: 30px;
         height: 30px;
+    }
+
+    .controls-left-side button, .controls-right-side button {
+        width: 35px;
+        height: 35px;
     }
 }
 
@@ -239,41 +254,5 @@
 @media (max-width: 350px) {
     .close-div {
         margin-bottom: 3px;
-    }
-}
-
-
-/* 
-    ##Device = Most of the Smartphones Mobiles (Portrait)
-    ##Screen = B/w 320px to 479px
-  */
-@media (min-width: 320px) and (max-width: 480px) {
-    .controls-left-side img, .controls-right-side img {
-        width: 20px;
-        height: 25px;
-    }
-
-    .controls-responsive {
-        bottom: 2px;
-    }
-
-    .controls-left-side {
-        margin-left: 5px;
-    }
-
-    .controls-right-side {
-        margin-right: 5px;
-    }
-
-    .arrow-right {
-        margin-left: 10px;
-    }
-
-    .arrow-up {
-        margin-right: 10px;
-    }
-
-    .bottle {
-        width: 28px !important;
     }
 }
