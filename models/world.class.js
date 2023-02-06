@@ -56,7 +56,7 @@ class World {
             this.checkThrowObjects();
             this.checkBottleHit();
             this.endboss.checkEndboss(this.character.x);
-        }, 1000 / 60);
+        }, 1000 / 100);
     }
 
 
@@ -379,7 +379,10 @@ class World {
      */
     addObjectsToMap(objects) {
         objects.forEach(o => {
-            this.addToMap(o);
+            let xDifference = o.x - this.character.x;
+            if (xDifference < 700) {
+                this.addToMap(o);
+            }
         });
     }
 

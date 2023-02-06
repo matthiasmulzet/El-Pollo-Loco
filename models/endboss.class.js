@@ -70,7 +70,7 @@ class Endboss extends MovableObject {
                 }, 1000);
             } else
                 this.animateDifferentSituations();
-        }, 100);
+        }, 120);
     }
 
 
@@ -124,7 +124,7 @@ class Endboss extends MovableObject {
     letEndbossDisappear() {
         setInterval(() => {
             this.y += 10;
-        }, 100);
+        }, 120);
     }
 
 

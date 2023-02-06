@@ -113,12 +113,12 @@ class Character extends MovableObject {
             this.moveLeftOrRight();
             this.jumpOrNoJump();
             this.world.camera_x = -this.x + 100; //game environment moves with the character
-        }, 30);
+        }, 50);
 
         setInterval(() => {
             this.collisionChicken.pause();
             this.animateCharacterImages();
-        }, 100); //10 frames pro Sekunde
+        }, 120);
     }
 
 

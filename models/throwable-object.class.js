@@ -43,7 +43,7 @@ class ThrowableObject extends MovableObject {
                 this.animateBottleBreak();
             else if (this.colliding == false)
                 this.bottleDisappearsFromScreen();
-        }, 80);
+        }, 100);
     }
 
 

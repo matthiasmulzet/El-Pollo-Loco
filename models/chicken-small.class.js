@@ -27,7 +27,7 @@ class SmallChicken extends MovableObject {
      * Chickens will randomly placed in map
      */
     placeChicken() {
-        this.x = 600 + Math.random() * 7500;
+        this.x = 600 + Math.random() * 5500;
     }
 
 
@@ -42,10 +42,10 @@ class SmallChicken extends MovableObject {
     animate() {
         setInterval(() => {
             this.moveLeft();
-        }, 100);
+        }, 120);
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 100);
+        }, 120);
     }
 }

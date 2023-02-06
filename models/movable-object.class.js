@@ -33,7 +33,7 @@ class MovableObject extends DrawableObject {
                     this.y = 135;
                 }
             }
-        }, 45);
+        }, 55);
     }
 
 
