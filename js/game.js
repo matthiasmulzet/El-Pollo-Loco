@@ -11,7 +11,7 @@ function init() {
     initLevel(); //creates all Elements in the game, except character
     setTimeout(() => {
         world = new World(canvas, keyboard);
-    }, 150);
+    }, 100);
     document.getElementById('canvas').classList.remove('d-none');
     document.getElementById('startscreen-without-canvas').classList.add('d-none');
     showControlsInCanvas();

@@ -33,7 +33,7 @@ class MovableObject extends DrawableObject {
                     this.y = 135;
                 }
             }
-        }, 55);
+        }, 45);
     }
 
 
@@ -129,7 +129,7 @@ class MovableObject extends DrawableObject {
      * if endboss collision with throwable bottles, his energy reduces
      */
     hit() {
-        this.energy -= 0.5;
+        this.energy -= 1.3;
         if (this.energy < 0) {
             this.energy = 0;
         } else { //time in ms when endboss or character collision 

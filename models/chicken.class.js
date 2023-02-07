@@ -25,7 +25,7 @@ class Chicken extends MovableObject {
     * Chickens will randomly placed in map
     */
     placeChicken() {
-        this.x = 800 + Math.random() * 5500;
+        this.x = 800 + Math.random() * 4500;
     }
 
 
@@ -40,10 +40,10 @@ class Chicken extends MovableObject {
     animate() {
         setInterval(() => {
             this.moveLeft();
-        }, 120);
+        }, 100);
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 120);
+        }, 100);
     }
 }

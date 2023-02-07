@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     width = 300;
     height = 400;
     y = 50;
-    speed = 10;
+    speed = 6;
     increasedSpeed = 0; //gets higher when endboss gets hurt
     otherDirection = false;
     hadFirstContact = false; //will be true when endboss apperas the first time in the screen
@@ -53,7 +53,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 6500; //starting value
+        this.x = 4000; //starting value
         this.animate();
     }
 
@@ -70,7 +70,7 @@ class Endboss extends MovableObject {
                 }, 1000);
             } else
                 this.animateDifferentSituations();
-        }, 120);
+        }, 100);
     }
 
 
@@ -124,7 +124,7 @@ class Endboss extends MovableObject {
     letEndbossDisappear() {
         setInterval(() => {
             this.y += 10;
-        }, 120);
+        }, 100);
     }
 
 

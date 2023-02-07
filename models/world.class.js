@@ -56,7 +56,7 @@ class World {
             this.checkThrowObjects();
             this.checkBottleHit();
             this.endboss.checkEndboss(this.character.x);
-        }, 1000 / 100);
+        }, 1000 / 60);
     }
 
 
@@ -374,16 +374,24 @@ class World {
         this.addObjectsToMap(this.level.bottles);
     }
 
+
     /**
      * @param {array} objects 
      */
     addObjectsToMap(objects) {
-        objects.forEach(o => {
-            let xDifference = o.x - this.character.x;
-            if (xDifference < 700) {
-                this.addToMap(o);
-            }
-        });
+        try {
+            objects.forEach(o => {
+                let xDifference = o.x - this.character.x;
+                if (xDifference < 700) {
+                    this.addToMap(o);
+                }
+            });
+        }
+
+        catch {
+            console.error('error', ErrorEvent);
+        }
+
     }
 
 

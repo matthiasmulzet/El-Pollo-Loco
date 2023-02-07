@@ -1,7 +1,7 @@
 class Character extends MovableObject {
     height = 300;
     y = 135;
-    speed = 10;
+    speed = 15;
     endbossIsDead = false;
 
     IMAGES_SLEEPING = [
@@ -25,7 +25,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-18.png',
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
-
     ]
 
     IMAGES_WALKING = [
@@ -113,12 +112,12 @@ class Character extends MovableObject {
             this.moveLeftOrRight();
             this.jumpOrNoJump();
             this.world.camera_x = -this.x + 100; //game environment moves with the character
-        }, 50);
+        }, 30);
 
         setInterval(() => {
             this.collisionChicken.pause();
             this.animateCharacterImages();
-        }, 120);
+        }, 100);
     }
 
 
