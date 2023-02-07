@@ -10,15 +10,15 @@ for (let i = 0; i < 15; i++) {
 }
 
 
-//create 8 Bottles who looks to the left and push them in Array
-for (let i = 0; i < 8; i++) {
+//create 12 Bottles who looks to the left and push them in Array
+for (let i = 0; i < 12; i++) {
     let bottle = new Bottle('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
     allBottles.push(bottle);
 }
 
 
-//create 8 Bottles who looks to the right and push them in Array
-for (let i = 8; i < 16; i++) {
+//create 12 Bottles who looks to the right and push them in Array
+for (let i = 12; i < 24; i++) {
     let bottle = new Bottle('img/6_salsa_bottle/2_salsa_bottle_on_ground.png');
     allBottles.push(bottle);
 }
@@ -100,7 +100,9 @@ function initLevel() {
         [
             allBottles[0], allBottles[1], allBottles[2], allBottles[3], allBottles[4], allBottles[5],
             allBottles[6], allBottles[7], allBottles[8], allBottles[9], allBottles[10], allBottles[11],
-            allBottles[12], allBottles[13], allBottles[14], allBottles[15]
+            allBottles[12], allBottles[13], allBottles[14], allBottles[15], allBottles[16],
+            allBottles[17], allBottles[18], allBottles[19], allBottles[20], allBottles[21],
+            allBottles[22], allBottles[23]
         ]
     )
 }

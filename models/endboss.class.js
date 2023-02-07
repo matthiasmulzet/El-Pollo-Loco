@@ -143,8 +143,8 @@ class Endboss extends MovableObject {
         this.speed = 0; //endboss stops briefly
         this.playAnimation(this.IMAGES_HURT);
         setTimeout(() => {
-            this.increasedSpeed += 0.5;
-            this.speed = 10 + this.increasedSpeed;
+            this.increasedSpeed += 2;
+            this.speed = 6 + this.increasedSpeed;
         }, 400);
     }
 

@@ -56,7 +56,7 @@ class World {
             this.checkThrowObjects();
             this.checkBottleHit();
             this.endboss.checkEndboss(this.character.x);
-        }, 1000 / 60);
+        }, 1000 / 100);
     }
 
 
