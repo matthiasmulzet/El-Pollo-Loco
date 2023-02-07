@@ -128,8 +128,8 @@ class MovableObject extends DrawableObject {
      * if character collision with chickens, his energy reduces
      * if endboss collision with throwable bottles, his energy reduces
      */
-    hit() {
-        this.energy -= 1.3;
+    hit(damage) {
+        this.energy -= damage;
         if (this.energy < 0) {
             this.energy = 0;
         } else { //time in ms when endboss or character collision 

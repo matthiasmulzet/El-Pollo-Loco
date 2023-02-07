@@ -87,7 +87,7 @@ class World {
         else if (this.characterJumpsOnNormalChicken(chickenIsJumpedOn))
             this.animateDeadOfChicken(index);
         else {
-            this.character.hit();
+            this.character.hit(0.5);
             this.statusbarHealth.setPercentage(this.character.energy);
         }
     }

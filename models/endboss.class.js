@@ -189,7 +189,7 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             this.world.throwableObjects.splice(indexBottle, 1);
         }, 400);
-        this.hit();
+        this.hit(2);
         this.world.statusbarEndboss.setPercentage(this.energy);
     }
 
