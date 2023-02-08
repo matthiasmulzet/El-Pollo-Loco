@@ -143,7 +143,7 @@ class Endboss extends MovableObject {
         this.speed = 0; //endboss stops briefly
         this.playAnimation(this.IMAGES_HURT);
         setTimeout(() => {
-            this.increasedSpeed += 2;
+            this.increasedSpeed += 1;
             this.speed = 6 + this.increasedSpeed;
         }, 400);
     }
@@ -189,7 +189,7 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             this.world.throwableObjects.splice(indexBottle, 1);
         }, 400);
-        this.hit(2);
+        this.hit(1.5);
         this.world.statusbarEndboss.setPercentage(this.energy);
     }
 
